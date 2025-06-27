@@ -179,10 +179,18 @@ async def light_on(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             return
         
         result = ha_api.turn_on_light(entity_id)
-        if result:
+        
+        # Дополнительная проверка: проверим фактическое состояние устройства
+        import time
+        time.sleep(2)  # Небольшая задержка для обновления состояния
+        
+        final_state = ha_api.get_entity_state(entity_id)
+        if final_state and final_state.get('state') == 'on':
+            await update.message.reply_text(f"✅ Световое устройство `{entity_id}` включено", parse_mode='Markdown')
+        elif result:
             await update.message.reply_text(f"✅ Световое устройство `{entity_id}` включено", parse_mode='Markdown')
         else:
-            await update.message.reply_text(f"❌ Не удалось включить устройство `{entity_id}`\n\nВозможные причины:\n• Устройство недоступно\n• Неверный entity_id\n• Проблемы с сетью\n• Устройство уже включено", parse_mode='Markdown')
+            await update.message.reply_text(f"❌ Не удалось включить устройство `{entity_id}`\n\nВозможные причины:\n• Устройство недоступно\n• Неверный entity_id\n• Проблемы с сетью", parse_mode='Markdown')
     except Exception as e:
         logger.error(f"Light on command error: {e}")
         error_msg = str(e)
@@ -206,10 +214,18 @@ async def light_off(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             return
         
         result = ha_api.turn_off_light(entity_id)
-        if result:
+        
+        # Дополнительная проверка: проверим фактическое состояние устройства
+        import time
+        time.sleep(2)  # Небольшая задержка для обновления состояния
+        
+        final_state = ha_api.get_entity_state(entity_id)
+        if final_state and final_state.get('state') == 'off':
+            await update.message.reply_text(f"✅ Световое устройство `{entity_id}` выключено", parse_mode='Markdown')
+        elif result:
             await update.message.reply_text(f"✅ Световое устройство `{entity_id}` выключено", parse_mode='Markdown')
         else:
-            await update.message.reply_text(f"❌ Не удалось выключить устройство `{entity_id}`\n\nВозможные причины:\n• Устройство недоступно\n• Неверный entity_id\n• Проблемы с сетью\n• Устройство уже выключено", parse_mode='Markdown')
+            await update.message.reply_text(f"❌ Не удалось выключить устройство `{entity_id}`\n\nВозможные причины:\n• Устройство недоступно\n• Неверный entity_id\n• Проблемы с сетью", parse_mode='Markdown')
     except Exception as e:
         logger.error(f"Light off command error: {e}")
         error_msg = str(e)
