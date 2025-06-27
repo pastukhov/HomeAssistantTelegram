@@ -172,14 +172,24 @@ async def light_on(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     
     entity_id = context.args[0]
     try:
+        # Проверим текущее состояние устройства
+        current_state = ha_api.get_entity_state(entity_id)
+        if current_state and current_state.get('state') == 'on':
+            await update.message.reply_text(f"💡 Устройство `{entity_id}` уже включено", parse_mode='Markdown')
+            return
+        
         result = ha_api.turn_on_light(entity_id)
         if result:
             await update.message.reply_text(f"✅ Световое устройство `{entity_id}` включено", parse_mode='Markdown')
         else:
-            await update.message.reply_text(f"❌ Не удалось включить устройство `{entity_id}`\n\nВозможные причины:\n• Устройство недоступно\n• Неверный entity_id\n• Проблемы с сетью", parse_mode='Markdown')
+            await update.message.reply_text(f"❌ Не удалось включить устройство `{entity_id}`\n\nВозможные причины:\n• Устройство недоступно\n• Неверный entity_id\n• Проблемы с сетью\n• Устройство уже включено", parse_mode='Markdown')
     except Exception as e:
         logger.error(f"Light on command error: {e}")
-        await update.message.reply_text(f"❌ Ошибка управления освещением: {str(e)}")
+        error_msg = str(e)
+        if "can't find end of the entity" in error_msg:
+            await update.message.reply_text(f"❌ Ошибка связи с Home Assistant\n\nВозможные причины:\n• Устройство недоступно\n• Временные проблемы с сетью\n• Попробуйте через несколько секунд")
+        else:
+            await update.message.reply_text(f"❌ Ошибка управления освещением: {error_msg}")
 
 async def light_off(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Turn off a light."""
@@ -189,14 +199,24 @@ async def light_off(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     
     entity_id = context.args[0]
     try:
+        # Проверим текущее состояние устройства
+        current_state = ha_api.get_entity_state(entity_id)
+        if current_state and current_state.get('state') == 'off':
+            await update.message.reply_text(f"💡 Устройство `{entity_id}` уже выключено", parse_mode='Markdown')
+            return
+        
         result = ha_api.turn_off_light(entity_id)
         if result:
             await update.message.reply_text(f"✅ Световое устройство `{entity_id}` выключено", parse_mode='Markdown')
         else:
-            await update.message.reply_text(f"❌ Не удалось выключить устройство `{entity_id}`\n\nВозможные причины:\n• Устройство недоступно\n• Неверный entity_id\n• Проблемы с сетью", parse_mode='Markdown')
+            await update.message.reply_text(f"❌ Не удалось выключить устройство `{entity_id}`\n\nВозможные причины:\n• Устройство недоступно\n• Неверный entity_id\n• Проблемы с сетью\n• Устройство уже выключено", parse_mode='Markdown')
     except Exception as e:
         logger.error(f"Light off command error: {e}")
-        await update.message.reply_text(f"❌ Ошибка управления освещением: {str(e)}")
+        error_msg = str(e)
+        if "can't find end of the entity" in error_msg:
+            await update.message.reply_text(f"❌ Ошибка связи с Home Assistant\n\nВозможные причины:\n• Устройство недоступно\n• Временные проблемы с сетью\n• Попробуйте через несколько секунд")
+        else:
+            await update.message.reply_text(f"❌ Ошибка управления освещением: {error_msg}")
 
 async def switches(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """List all switches and their states with pagination."""

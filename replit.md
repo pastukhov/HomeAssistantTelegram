@@ -94,6 +94,9 @@ Required environment variables:
 - June 27, 2025: Implemented pagination for all device commands (/lights, /switches, /sensors)
 - June 27, 2025: Fixed device control API responses and improved diagnostic logging
 - June 27, 2025: Enhanced user experience with Russian language error messages and detailed feedback
+- June 27, 2025: Implemented smart device state checking to prevent unnecessary API calls and HTTP 500 errors
+- June 27, 2025: Added intelligent error handling for grouped light devices (like Yeelight groups)
+- June 27, 2025: Improved user feedback with device state awareness (already on/off notifications)
 
 ## User Preferences
 
