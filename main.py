@@ -1,6 +1,7 @@
 import logging
-import threading
+import subprocess
 import os
+import atexit
 from app import app
 
 # Configure logging
@@ -11,36 +12,48 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-def run_flask():
-    """Run Flask application"""
-    app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)
+# Global variable to track bot process
+bot_process = None
 
-def run_bot():
-    """Run Telegram bot"""
-    try:
-        # Import bot here to avoid startup issues
-        from bot import start_bot
-        start_bot()
-    except ImportError as e:
-        logger.error(f"Telegram bot dependencies not available: {e}")
-        logger.info("Running in web-only mode. Install python-telegram-bot to enable bot functionality.")
-    except Exception as e:
-        logger.error(f"Bot error: {e}")
-
-if __name__ == "__main__":
-    # Check if we should run bot
+def start_telegram_bot():
+    """Start Telegram bot as a separate process"""
+    global bot_process
     telegram_token = os.getenv('TELEGRAM_BOT_TOKEN')
     
-    if telegram_token:
-        # Start Flask app in a separate thread
-        flask_thread = threading.Thread(target=run_flask, daemon=True)
-        flask_thread.start()
+    if not telegram_token:
+        logger.info("TELEGRAM_BOT_TOKEN not set. Telegram bot disabled.")
+        return
         
-        # Start Telegram bot in main thread
-        logger.info("Starting Telegram bot and Flask web interface...")
-        run_bot()
-    else:
-        # Run only Flask web interface
-        logger.info("TELEGRAM_BOT_TOKEN not set. Running web interface only.")
-        logger.info("Set TELEGRAM_BOT_TOKEN to enable Telegram bot functionality.")
-        run_flask()
+    try:
+        # Start bot as separate process
+        bot_process = subprocess.Popen(
+            ['python', 'telegram_bot_service.py'],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL
+        )
+        logger.info(f"Telegram bot started with PID: {bot_process.pid}")
+        
+        # Write PID to file for later cleanup
+        with open('telegram_bot.pid', 'w') as f:
+            f.write(str(bot_process.pid))
+            
+    except Exception as e:
+        logger.error(f"Failed to start Telegram bot: {e}")
+
+def cleanup_bot_process():
+    """Clean up bot process on exit"""
+    global bot_process
+    if bot_process and bot_process.poll() is None:
+        logger.info("Stopping Telegram bot...")
+        bot_process.terminate()
+        bot_process.wait()
+
+# Register cleanup function
+atexit.register(cleanup_bot_process)
+
+# Start Telegram bot when module is imported
+start_telegram_bot()
+
+# This ensures the Flask app runs for gunicorn
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5000, debug=True, use_reloader=False)

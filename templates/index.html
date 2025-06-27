@@ -77,6 +77,39 @@
     </div>
 </div>
 
+<!-- Service Status -->
+<div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-home fa-2x me-3 {% if ha_connected %}text-success{% else %}text-danger{% endif %}"></i>
+                    <div>
+                        <h5 class="card-title mb-1">Home Assistant</h5>
+                        <span class="badge {% if ha_connected %}bg-success{% else %}bg-danger{% endif %}">
+                            {% if ha_connected %}Connected{% else %}Disconnected{% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <i class="fab fa-telegram fa-2x me-3 text-info"></i>
+                    <div>
+                        <h5 class="card-title mb-1">Telegram Bot</h5>
+                        <span class="badge bg-info" id="telegram-status">Checking...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Bot Commands Help -->
 <div class="row mb-4">
     <div class="col-12">
@@ -215,26 +248,46 @@ setTimeout(function() {
 }, 30000);
 {% endif %}
 
-// Add real-time status indicator
-function updateConnectionStatus() {
+// Update both service statuses
+function updateServiceStatus() {
     fetch('/api/status')
         .then(response => response.json())
         .then(data => {
-            const badge = document.querySelector('.badge');
-            if (data.status === 'connected') {
-                badge.className = 'badge bg-success fs-6';
-                badge.innerHTML = '<i class="fas fa-check-circle me-1"></i>Connected';
-            } else {
-                badge.className = 'badge bg-danger fs-6';
-                badge.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Disconnected';
+            // Update Telegram bot status
+            const telegramStatus = document.getElementById('telegram-status');
+            if (telegramStatus) {
+                const telegramState = data.telegram_bot || 'unknown';
+                switch(telegramState) {
+                    case 'running':
+                        telegramStatus.className = 'badge bg-success';
+                        telegramStatus.innerHTML = '<i class="fas fa-check-circle me-1"></i>Running';
+                        break;
+                    case 'stopped':
+                        telegramStatus.className = 'badge bg-warning';
+                        telegramStatus.innerHTML = '<i class="fas fa-pause-circle me-1"></i>Stopped';
+                        break;
+                    case 'disabled':
+                        telegramStatus.className = 'badge bg-secondary';
+                        telegramStatus.innerHTML = '<i class="fas fa-ban me-1"></i>Disabled';
+                        break;
+                    default:
+                        telegramStatus.className = 'badge bg-info';
+                        telegramStatus.innerHTML = '<i class="fas fa-question-circle me-1"></i>Unknown';
+                }
             }
         })
         .catch(error => {
             console.error('Status check failed:', error);
+            const telegramStatus = document.getElementById('telegram-status');
+            if (telegramStatus) {
+                telegramStatus.className = 'badge bg-danger';
+                telegramStatus.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Error';
+            }
         });
 }
 
-// Check status every 10 seconds
-setInterval(updateConnectionStatus, 10000);
+// Check status immediately and then every 10 seconds
+updateServiceStatus();
+setInterval(updateServiceStatus, 10000);
 </script>
 {% endblock %}

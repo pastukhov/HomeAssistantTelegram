@@ -55,9 +55,28 @@ def api_status():
     """API endpoint for bot status"""
     try:
         states = ha_api.get_all_states()
+        
+        # Check Telegram bot status
+        telegram_status = 'disabled'
+        try:
+            with open('telegram_bot.pid', 'r') as f:
+                pid = int(f.read().strip())
+                # Check if process is running
+                import os
+                try:
+                    os.kill(pid, 0)
+                    telegram_status = 'running'
+                except OSError:
+                    telegram_status = 'stopped'
+        except FileNotFoundError:
+            telegram_status = 'not_started'
+        except Exception:
+            telegram_status = 'unknown'
+        
         return jsonify({
             'status': 'connected',
             'entities_count': len(states) if states else 0,
+            'telegram_bot': telegram_status,
             'timestamp': ha_api.get_current_time()
         })
     except Exception as e:
@@ -65,6 +84,7 @@ def api_status():
         return jsonify({
             'status': 'error',
             'error': str(e),
+            'telegram_bot': 'error',
             'timestamp': None
         }), 500
 

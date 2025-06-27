@@ -85,6 +85,9 @@ Required environment variables:
 - June 27, 2025: Successfully connected to Home Assistant instance
 - June 27, 2025: Fixed Telegram bot imports and dependencies
 - June 27, 2025: Added Russian language support for bot commands (/start and /help)
+- June 27, 2025: Implemented multi-process architecture for stable Telegram bot execution
+- June 27, 2025: Added real-time service status monitoring on web dashboard
+- June 27, 2025: Successfully deployed complete solution with both web interface and Telegram bot running simultaneously
 
 ## User Preferences
 
