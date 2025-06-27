@@ -88,6 +88,9 @@ Required environment variables:
 - June 27, 2025: Implemented multi-process architecture for stable Telegram bot execution
 - June 27, 2025: Added real-time service status monitoring on web dashboard
 - June 27, 2025: Successfully deployed complete solution with both web interface and Telegram bot running simultaneously
+- June 27, 2025: Fixed JSON parsing errors for large Home Assistant responses (715+ entities)
+- June 27, 2025: Enhanced Telegram bot error handling with informative Russian messages
+- June 27, 2025: Optimized /lights command to handle large device collections efficiently
 
 ## User Preferences
 

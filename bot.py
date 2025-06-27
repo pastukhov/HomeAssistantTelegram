@@ -103,25 +103,40 @@ async def status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def lights(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """List all lights and their states."""
     try:
+        # Отправляем сообщение о загрузке
+        loading_msg = await update.message.reply_text("🔄 Получаю информацию о световых устройствах...")
+        
         lights_data = ha_api.get_lights()
         if not lights_data:
-            await update.message.reply_text("💡 No lights found or unable to connect to Home Assistant")
+            await loading_msg.edit_text("💡 Световые устройства не найдены или нет подключения к Home Assistant.\n\nПопробуйте команду /status для проверки соединения.")
             return
         
-        message = "💡 *Lights Status:*\n\n"
-        for light in lights_data[:15]:  # Limit to 15 lights to avoid message length issues
+        message = "💡 *Состояние световых устройств:*\n\n"
+        for light in lights_data[:10]:  # Ограничиваем до 10 устройств
             state_emoji = "🟢" if light['state'] == 'on' else "🔴"
-            message += f"{state_emoji} `{light['entity_id']}`\n"
-            message += f"   📝 {light['friendly_name']}\n"
-            message += f"   🔧 State: {light['state']}\n\n"
+            friendly_name = light['friendly_name']
+            if len(friendly_name) > 30:  # Обрезаем длинные имена
+                friendly_name = friendly_name[:27] + "..."
+            
+            message += f"{state_emoji} {friendly_name}\n"
+            message += f"   ID: `{light['entity_id']}`\n"
+            message += f"   Состояние: {light['state']}\n\n"
         
-        if len(lights_data) > 15:
-            message += f"... and {len(lights_data) - 15} more lights"
+        if len(lights_data) > 10:
+            message += f"... и ещё {len(lights_data) - 10} устройств\n\n"
         
-        await update.message.reply_text(message, parse_mode='Markdown')
+        message += "_Для управления используйте:_\n"
+        message += "`/light_on light.example`\n"
+        message += "`/light_off light.example`"
+        
+        await loading_msg.edit_text(message, parse_mode='Markdown')
     except Exception as e:
         logger.error(f"Lights command error: {e}")
-        await update.message.reply_text(f"❌ Error getting lights: {str(e)}")
+        error_msg = "❌ Ошибка при получении информации о световых устройствах.\n\n"
+        if "parse entities" in str(e).lower():
+            error_msg += "Возможно, данные от Home Assistant слишком большие или содержат ошибки.\n"
+        error_msg += f"Подробности: {str(e)[:100]}..."
+        await update.message.reply_text(error_msg)
 
 async def light_on(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Turn on a light."""

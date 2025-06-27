@@ -37,11 +37,22 @@ class HomeAssistantAPI:
                 url=url,
                 headers=self.headers,
                 json=data,
-                timeout=10
+                timeout=30  # Увеличиваем timeout для больших ответов
             )
             
             if response.status_code == 200:
-                return response.json()
+                try:
+                    return response.json()
+                except ValueError as json_error:
+                    logger.error(f"JSON parsing error: {json_error}")
+                    logger.error(f"Response content length: {len(response.content)} bytes")
+                    # Попробуем обрезать ответ и попробовать снова
+                    if len(response.content) > 100000:  # Если ответ больше 100KB
+                        logger.warning("Response too large, trying alternative approach")
+                        return None
+                    else:
+                        logger.error(f"Response preview: {response.text[:500]}...")
+                        return None
             else:
                 logger.error(f"API request failed: {response.status_code} - {response.text}")
                 return None
@@ -72,23 +83,63 @@ class HomeAssistantAPI:
     
     def get_lights(self) -> List[Dict]:
         """Get all light entities and their states."""
-        states = self.get_all_states()
-        if not states:
+        try:
+            states = self.get_all_states()
+            if not states:
+                logger.warning("Could not get all states, trying alternative approach")
+                return self._get_lights_alternative()
+            
+            lights = []
+            for state in states:
+                entity_id = state.get('entity_id', '')
+                if entity_id.startswith('light.'):
+                    lights.append({
+                        'entity_id': entity_id,
+                        'state': state.get('state', 'unknown'),
+                        'friendly_name': state.get('attributes', {}).get('friendly_name', entity_id),
+                        'brightness': state.get('attributes', {}).get('brightness'),
+                        'color_temp': state.get('attributes', {}).get('color_temp')
+                    })
+            
+            return sorted(lights, key=lambda x: x['friendly_name'])
+        except Exception as e:
+            logger.error(f"Error in get_lights: {e}")
+            return self._get_lights_alternative()
+    
+    def _get_lights_alternative(self) -> List[Dict]:
+        """Alternative method to get lights when main API fails."""
+        try:
+            # Получаем список доменов сначала
+            result = self._make_request('GET', 'services')
+            if result is None:
+                return []
+            
+            # Попробуем получить конкретные световые устройства через индивидуальные запросы
+            lights = []
+            
+            # Попробуем найти известные световые устройства
+            common_light_names = ['main_light', 'bedroom_light', 'kitchen_light', 'living_room_light']
+            
+            for light_name in common_light_names:
+                entity_id = f'light.{light_name}'
+                state_data = self.get_entity_state(entity_id)
+                if state_data:
+                    lights.append({
+                        'entity_id': entity_id,
+                        'state': state_data.get('state', 'unknown'),
+                        'friendly_name': state_data.get('attributes', {}).get('friendly_name', entity_id),
+                        'brightness': state_data.get('attributes', {}).get('brightness'),
+                        'color_temp': state_data.get('attributes', {}).get('color_temp')
+                    })
+            
+            # Если ничего не нашли, вернем пустой список с пояснением
+            if not lights:
+                logger.info("No lights found with alternative method")
+            
+            return lights
+        except Exception as e:
+            logger.error(f"Error in alternative lights method: {e}")
             return []
-        
-        lights = []
-        for state in states:
-            entity_id = state.get('entity_id', '')
-            if entity_id.startswith('light.'):
-                lights.append({
-                    'entity_id': entity_id,
-                    'state': state.get('state', 'unknown'),
-                    'friendly_name': state.get('attributes', {}).get('friendly_name', entity_id),
-                    'brightness': state.get('attributes', {}).get('brightness'),
-                    'color_temp': state.get('attributes', {}).get('color_temp')
-                })
-        
-        return sorted(lights, key=lambda x: x['friendly_name'])
     
     def get_switches(self) -> List[Dict]:
         """Get all switch entities and their states."""
