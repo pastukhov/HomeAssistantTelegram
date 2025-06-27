@@ -5,6 +5,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
 from home_assistant import HomeAssistantAPI
+from metrics import track_telegram_command, metrics_collector
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -13,6 +14,7 @@ logger = logging.getLogger(__name__)
 # Initialize Home Assistant API
 ha_api = HomeAssistantAPI()
 
+@track_telegram_command("start")
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /start is issued."""
     welcome_message = """
@@ -45,6 +47,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """
     await update.message.reply_text(welcome_message, parse_mode='Markdown')
 
+@track_telegram_command("help")
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /help is issued."""
     help_text = """
@@ -74,6 +77,7 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     """
     await update.message.reply_text(help_text, parse_mode='Markdown')
 
+@track_telegram_command("status")
 async def status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Show Home Assistant status."""
     try:
@@ -102,6 +106,7 @@ async def status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         logger.error(f"Status command error: {e}")
         await update.message.reply_text(f"❌ Error getting status: {str(e)}")
 
+@track_telegram_command("lights")
 async def lights(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """List all lights and their states with pagination."""
     try:
@@ -164,6 +169,7 @@ async def lights(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         error_msg += f"Подробности: {str(e)[:100]}..."
         await update.message.reply_text(error_msg)
 
+@track_telegram_command("light_on")
 async def light_on(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Turn on a light."""
     if not context.args:
@@ -199,6 +205,7 @@ async def light_on(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         else:
             await update.message.reply_text(f"❌ Ошибка управления освещением: {error_msg}")
 
+@track_telegram_command("light_off")
 async def light_off(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Turn off a light."""
     if not context.args:
@@ -234,6 +241,7 @@ async def light_off(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         else:
             await update.message.reply_text(f"❌ Ошибка управления освещением: {error_msg}")
 
+@track_telegram_command("switches")
 async def switches(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """List all switches and their states with pagination."""
     try:
@@ -291,6 +299,7 @@ async def switches(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         logger.error(f"Switches command error: {e}")
         await update.message.reply_text(f"❌ Ошибка при получении переключателей: {str(e)}")
 
+@track_telegram_command("switch_on")
 async def switch_on(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Turn on a switch."""
     if not context.args:
@@ -308,6 +317,7 @@ async def switch_on(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         logger.error(f"Switch on command error: {e}")
         await update.message.reply_text(f"❌ Error controlling switch: {str(e)}")
 
+@track_telegram_command("switch_off")
 async def switch_off(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Turn off a switch."""
     if not context.args:
@@ -325,6 +335,7 @@ async def switch_off(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         logger.error(f"Switch off command error: {e}")
         await update.message.reply_text(f"❌ Error controlling switch: {str(e)}")
 
+@track_telegram_command("sensors")
 async def sensors(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """List sensor readings with pagination."""
     try:
@@ -383,6 +394,7 @@ async def sensors(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         logger.error(f"Sensors command error: {e}")
         await update.message.reply_text(f"❌ Ошибка при получении датчиков: {str(e)}")
 
+@track_telegram_command("unknown")
 async def unknown_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle unknown commands."""
     await update.message.reply_text(

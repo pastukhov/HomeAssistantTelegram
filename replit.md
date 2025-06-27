@@ -2,7 +2,7 @@
 
 ## Overview
 
-This is a Flask-based web application that integrates with Home Assistant and provides a Telegram bot interface for controlling smart home devices. The system consists of a web dashboard, a Home Assistant API client, and a Telegram bot that runs concurrently to provide both web and chat-based interfaces for home automation control.
+This is a production-ready Flask-based web application that integrates with Home Assistant and provides a Telegram bot interface for controlling smart home devices. The system features a web dashboard, a Home Assistant API client, a Telegram bot, and a comprehensive monitoring system with OpenMetrics integration. It provides both web and chat-based interfaces for home automation control with real-time metrics and performance monitoring.
 
 ## System Architecture
 
@@ -21,6 +21,8 @@ The system uses a multi-threaded approach where the Flask application runs in a 
 - Built with Flask framework using Bootstrap dark theme
 - Provides real-time system status and entity counts
 - Displays light states and device information
+- Real-time metrics dashboard with auto-refresh
+- OpenMetrics endpoint for Prometheus integration
 - Responsive design with dark theme UI
 
 ### Telegram Bot Integration
@@ -28,18 +30,33 @@ The system uses a multi-threaded approach where the Flask application runs in a 
 - Supports device control commands (lights, switches)
 - Provides system status and sensor information
 - Command-based interface for home automation
+- Comprehensive metrics tracking for all bot commands
+- Performance monitoring with execution time tracking
 
 ### Home Assistant API Client
 - RESTful API communication with Home Assistant instance
 - Bearer token authentication
 - Handles entity state retrieval and device control
 - Error handling and logging for API interactions
+- API performance monitoring and health checks
+- Device command tracking with success/failure metrics
+
+### OpenMetrics Monitoring System
+- Production-ready metrics collection using prometheus_client
+- Tracks application uptime, memory usage, and performance
+- Monitors Telegram bot command usage and response times
+- Home Assistant API request tracking with status codes
+- Device operation monitoring (lights, switches, sensors)
+- Active user tracking and connection health monitoring
+- Web dashboard integration with real-time metric updates
 
 ### Frontend Design
 - Bootstrap 5 with custom dark theme
 - Font Awesome icons for enhanced UI
 - Responsive grid layout
 - Card-based component design
+- Real-time metrics visualization
+- Dynamic content updates via JavaScript
 
 ## Data Flow
 
@@ -55,10 +72,16 @@ The system uses a multi-threaded approach where the Flask application runs in a 
 - **python-telegram-bot**: Telegram bot API integration
 - **requests**: HTTP client for Home Assistant API communication
 - **gunicorn**: WSGI server for production deployment
+- **prometheus_client**: OpenMetrics and Prometheus integration for monitoring
 
 ### UI Dependencies
 - **Bootstrap 5**: Frontend CSS framework with dark theme
 - **Font Awesome**: Icon library for enhanced UI
+
+### Monitoring Dependencies
+- **prometheus_client**: Metrics collection and exposition
+- **psutil** (via metrics): System resource monitoring
+- **threading**: Multi-threaded metrics server
 
 ### Infrastructure
 - **PostgreSQL**: Database system (configured but not actively used in current codebase)
@@ -108,6 +131,10 @@ Required environment variables:
 - June 27, 2025: Added PostgreSQL database integration with automated initialization
 - June 27, 2025: Implemented Nginx reverse proxy with SSL support and security headers
 - June 27, 2025: Added health checks, monitoring, and logging capabilities for containerized deployment
+- June 27, 2025: Implemented comprehensive OpenMetrics monitoring system with prometheus_client integration
+- June 27, 2025: Added real-time metrics dashboard to web interface with auto-updating performance indicators
+- June 27, 2025: Integrated metrics tracking for all Telegram bot commands and Home Assistant API calls
+- June 27, 2025: Created /metrics endpoint for Prometheus scraping and /api/metrics-summary for dashboard consumption
 
 ## User Preferences
 

@@ -203,6 +203,70 @@
 </div>
 {% endif %}
 
+<!-- System Metrics -->
+{% if ha_connected %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-chart-line me-2"></i>
+                    System Metrics
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="card bg-secondary">
+                            <div class="card-body text-center">
+                                <i class="fas fa-clock fa-2x mb-2"></i>
+                                <h6 class="card-title">Uptime</h6>
+                                <p class="card-text" id="uptime">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="card bg-secondary">
+                            <div class="card-body text-center">
+                                <i class="fas fa-users fa-2x mb-2"></i>
+                                <h6 class="card-title">Active Users</h6>
+                                <p class="card-text" id="active-users">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="card bg-secondary">
+                            <div class="card-body text-center">
+                                <i class="fas fa-terminal fa-2x mb-2"></i>
+                                <h6 class="card-title">Bot Commands</h6>
+                                <p class="card-text" id="total-commands">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="card bg-secondary">
+                            <div class="card-body text-center">
+                                <i class="fas fa-home fa-2x mb-2"></i>
+                                <h6 class="card-title">HA Connection</h6>
+                                <p class="card-text">
+                                    <span class="badge bg-success" id="ha-status">Connected</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-end">
+                    <a href="/metrics" class="btn btn-outline-info btn-sm" target="_blank">
+                        <i class="fas fa-external-link-alt me-1"></i>
+                        View Full Metrics
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <!-- Setup Instructions -->
 {% if not ha_connected %}
 <div class="row mt-4">
@@ -241,11 +305,53 @@
 
 {% block scripts %}
 <script>
-// Auto-refresh the page every 30 seconds if connected
+// Load and update metrics
 {% if ha_connected %}
+function updateMetrics() {
+    fetch('/api/metrics-summary')
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                const metrics = data.metrics;
+                
+                // Update uptime
+                const uptimeSeconds = metrics.uptime_seconds;
+                const hours = Math.floor(uptimeSeconds / 3600);
+                const minutes = Math.floor((uptimeSeconds % 3600) / 60);
+                document.getElementById('uptime').textContent = `${hours}h ${minutes}m`;
+                
+                // Update active users
+                document.getElementById('active-users').textContent = metrics.active_users || 0;
+                
+                // Update total commands
+                document.getElementById('total-commands').textContent = Math.round(metrics.total_commands || 0);
+                
+                // Update HA connection status
+                const haStatus = document.getElementById('ha-status');
+                if (metrics.homeassistant_connection === 1.0) {
+                    haStatus.textContent = 'Connected';
+                    haStatus.className = 'badge bg-success';
+                } else {
+                    haStatus.textContent = 'Disconnected';
+                    haStatus.className = 'badge bg-danger';
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching metrics:', error);
+        });
+}
+
+// Update metrics immediately
+updateMetrics();
+
+// Update metrics every 10 seconds
+setInterval(updateMetrics, 10000);
+
+// Auto-refresh the page every 5 minutes if connected
 setTimeout(function() {
     location.reload();
-}, 30000);
+}, 300000);
 {% endif %}
 
 // Update both service statuses

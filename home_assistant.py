@@ -3,6 +3,7 @@ import requests
 import logging
 from datetime import datetime
 from typing import List, Dict, Optional
+from metrics import track_homeassistant_request, track_device_command
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
@@ -26,6 +27,7 @@ class HomeAssistantAPI:
             'Content-Type': 'application/json'
         }
     
+    @track_homeassistant_request("{method}", "{endpoint}")
     def _make_request(self, method: str, endpoint: str, data: Optional[Dict] = None) -> Optional[Dict]:
         """Make HTTP request to Home Assistant API."""
         try:
@@ -210,18 +212,22 @@ class HomeAssistantAPI:
         
         return sorted(sensors, key=lambda x: x['friendly_name'])
     
+    @track_device_command("{entity_id}", "turn_on")
     def turn_on_light(self, entity_id: str) -> bool:
         """Turn on a light."""
         return self.call_service('light', 'turn_on', entity_id)
     
+    @track_device_command("{entity_id}", "turn_off")
     def turn_off_light(self, entity_id: str) -> bool:
         """Turn off a light."""
         return self.call_service('light', 'turn_off', entity_id)
     
+    @track_device_command("{entity_id}", "turn_on")
     def turn_on_switch(self, entity_id: str) -> bool:
         """Turn on a switch."""
         return self.call_service('switch', 'turn_on', entity_id)
     
+    @track_device_command("{entity_id}", "turn_off")
     def turn_off_switch(self, entity_id: str) -> bool:
         """Turn off a switch."""
         return self.call_service('switch', 'turn_off', entity_id)
