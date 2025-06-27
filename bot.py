@@ -52,23 +52,25 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
 📊 *Информация о системе:*
 /status - Показать статус системы Home Assistant
-/sensors - Показать показания датчиков
+/sensors \[номер\_страницы\] - Показания датчиков
+/lights \[номер\_страницы\] - Список светильников
+/switches \[номер\_страницы\] - Список выключателей
 
 💡 *Управление освещением:*
-/lights - Список всех светильников и их состояние
-/light\_on <entity\_id> - Включить указанный светильник
-/light\_off <entity\_id> - Выключить указанный светильник
+/light\_on <entity\_id> - Включить светильник
+/light\_off <entity\_id> - Выключить светильник
 
 🔌 *Управление выключателями:*
-/switches - Список всех выключателей и их состояние
-/switch\_on <entity\_id> - Включить указанный выключатель
-/switch\_off <entity\_id> - Выключить указанный выключатель
+/switch\_on <entity\_id> - Включить выключатель
+/switch\_off <entity\_id> - Выключить выключатель
 
 *Примеры использования:*
+`/lights` - первая страница световых устройств
+`/lights 2` - вторая страница
 `/light_on light.kitchen` - включить свет на кухне
 `/switch_off switch.garden_lights` - выключить садовое освещение
 
-💡 *Совет:* Используйте команды /lights или /switches чтобы увидеть доступные устройства и их entity\_id
+📄 *Навигация:* В списках устройств используйте ссылки ⬅️ ➡️ для перехода между страницами
     """
     await update.message.reply_text(help_text, parse_mode='Markdown')
 
@@ -101,8 +103,13 @@ async def status(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f"❌ Error getting status: {str(e)}")
 
 async def lights(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """List all lights and their states."""
+    """List all lights and their states with pagination."""
     try:
+        # Определяем страницу из аргументов команды
+        page = 1
+        if context.args and context.args[0].isdigit():
+            page = max(1, int(context.args[0]))
+        
         # Отправляем сообщение о загрузке
         loading_msg = await update.message.reply_text("🔄 Получаю информацию о световых устройствах...")
         
@@ -111,23 +118,42 @@ async def lights(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
             await loading_msg.edit_text("💡 Световые устройства не найдены или нет подключения к Home Assistant.\n\nПопробуйте команду /status для проверки соединения.")
             return
         
-        message = "💡 *Состояние световых устройств:*\n\n"
-        for light in lights_data[:10]:  # Ограничиваем до 10 устройств
+        # Настройки пагинации
+        per_page = 8
+        total_pages = (len(lights_data) + per_page - 1) // per_page
+        page = min(page, total_pages)  # Не превышаем максимальную страницу
+        
+        start_idx = (page - 1) * per_page
+        end_idx = start_idx + per_page
+        page_lights = lights_data[start_idx:end_idx]
+        
+        message = f"💡 *Световые устройства* (стр. {page}/{total_pages}):\n\n"
+        
+        for light in page_lights:
             state_emoji = "🟢" if light['state'] == 'on' else "🔴"
+            if light['state'] == 'unavailable':
+                state_emoji = "⚫"
+            
             friendly_name = light['friendly_name']
-            if len(friendly_name) > 30:  # Обрезаем длинные имена
-                friendly_name = friendly_name[:27] + "..."
+            if len(friendly_name) > 25:  # Обрезаем длинные имена
+                friendly_name = friendly_name[:22] + "..."
             
             message += f"{state_emoji} {friendly_name}\n"
-            message += f"   ID: `{light['entity_id']}`\n"
-            message += f"   Состояние: {light['state']}\n\n"
+            message += f"   `{light['entity_id']}`\n\n"
         
-        if len(lights_data) > 10:
-            message += f"... и ещё {len(lights_data) - 10} устройств\n\n"
+        # Добавляем навигацию
+        nav_line = ""
+        if page > 1:
+            nav_line += f"⬅️ `/lights {page - 1}` | "
+        nav_line += f"📄 {page}/{total_pages}"
+        if page < total_pages:
+            nav_line += f" | `/lights {page + 1}` ➡️"
         
-        message += "_Для управления используйте:_\n"
-        message += "`/light_on light.example`\n"
-        message += "`/light_off light.example`"
+        message += f"\n{nav_line}\n\n"
+        message += f"Всего устройств: {len(lights_data)}\n\n"
+        message += "_Управление:_\n"
+        message += "`/light_on entity_id` - включить\n"
+        message += "`/light_off entity_id` - выключить"
         
         await loading_msg.edit_text(message, parse_mode='Markdown')
     except Exception as e:
@@ -173,27 +199,61 @@ async def light_off(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.message.reply_text(f"❌ Error controlling light: {str(e)}")
 
 async def switches(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """List all switches and their states."""
+    """List all switches and their states with pagination."""
     try:
+        # Определяем страницу из аргументов команды
+        page = 1
+        if context.args and context.args[0].isdigit():
+            page = max(1, int(context.args[0]))
+        
+        loading_msg = await update.message.reply_text("🔄 Получаю информацию о переключателях...")
+        
         switches_data = ha_api.get_switches()
         if not switches_data:
-            await update.message.reply_text("🔌 No switches found or unable to connect to Home Assistant")
+            await loading_msg.edit_text("🔌 Переключатели не найдены или нет подключения к Home Assistant.\n\nПопробуйте команду /status для проверки соединения.")
             return
         
-        message = "🔌 *Switches Status:*\n\n"
-        for switch in switches_data[:15]:  # Limit to 15 switches
+        # Настройки пагинации
+        per_page = 8
+        total_pages = (len(switches_data) + per_page - 1) // per_page
+        page = min(page, total_pages)
+        
+        start_idx = (page - 1) * per_page
+        end_idx = start_idx + per_page
+        page_switches = switches_data[start_idx:end_idx]
+        
+        message = f"🔌 *Переключатели* (стр. {page}/{total_pages}):\n\n"
+        
+        for switch in page_switches:
             state_emoji = "🟢" if switch['state'] == 'on' else "🔴"
-            message += f"{state_emoji} `{switch['entity_id']}`\n"
-            message += f"   📝 {switch['friendly_name']}\n"
-            message += f"   🔧 State: {switch['state']}\n\n"
+            if switch['state'] == 'unavailable':
+                state_emoji = "⚫"
+            
+            friendly_name = switch['friendly_name']
+            if len(friendly_name) > 25:
+                friendly_name = friendly_name[:22] + "..."
+            
+            message += f"{state_emoji} {friendly_name}\n"
+            message += f"   `{switch['entity_id']}`\n\n"
         
-        if len(switches_data) > 15:
-            message += f"... and {len(switches_data) - 15} more switches"
+        # Добавляем навигацию
+        nav_line = ""
+        if page > 1:
+            nav_line += f"⬅️ `/switches {page - 1}` | "
+        nav_line += f"📄 {page}/{total_pages}"
+        if page < total_pages:
+            nav_line += f" | `/switches {page + 1}` ➡️"
         
-        await update.message.reply_text(message, parse_mode='Markdown')
+        message += f"\n{nav_line}\n\n"
+        message += f"Всего устройств: {len(switches_data)}\n\n"
+        message += "_Управление:_\n"
+        message += "`/switch_on entity_id` - включить\n"
+        message += "`/switch_off entity_id` - выключить"
+        
+        await loading_msg.edit_text(message, parse_mode='Markdown')
     except Exception as e:
         logger.error(f"Switches command error: {e}")
-        await update.message.reply_text(f"❌ Error getting switches: {str(e)}")
+        await update.message.reply_text(f"❌ Ошибка при получении переключателей: {str(e)}")
 
 async def switch_on(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Turn on a switch."""
@@ -230,26 +290,62 @@ async def switch_off(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None
         await update.message.reply_text(f"❌ Error controlling switch: {str(e)}")
 
 async def sensors(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """List sensor readings."""
+    """List sensor readings with pagination."""
     try:
+        # Определяем страницу из аргументов команды
+        page = 1
+        if context.args and context.args[0].isdigit():
+            page = max(1, int(context.args[0]))
+        
+        loading_msg = await update.message.reply_text("🔄 Получаю показания датчиков...")
+        
         sensors_data = ha_api.get_sensors()
         if not sensors_data:
-            await update.message.reply_text("📡 No sensors found or unable to connect to Home Assistant")
+            await loading_msg.edit_text("📡 Датчики не найдены или нет подключения к Home Assistant.\n\nПопробуйте команду /status для проверки соединения.")
             return
         
-        message = "📡 *Sensor Readings:*\n\n"
-        for sensor in sensors_data[:10]:  # Limit to 10 sensors
-            message += f"📊 `{sensor['entity_id']}`\n"
-            message += f"   📝 {sensor['friendly_name']}\n"
-            message += f"   📈 Value: {sensor['state']} {sensor.get('unit', '')}\n\n"
+        # Настройки пагинации
+        per_page = 6  # Меньше элементов для датчиков (больше информации)
+        total_pages = (len(sensors_data) + per_page - 1) // per_page
+        page = min(page, total_pages)
         
-        if len(sensors_data) > 10:
-            message += f"... and {len(sensors_data) - 10} more sensors"
+        start_idx = (page - 1) * per_page
+        end_idx = start_idx + per_page
+        page_sensors = sensors_data[start_idx:end_idx]
         
-        await update.message.reply_text(message, parse_mode='Markdown')
+        message = f"📡 *Показания датчиков* (стр. {page}/{total_pages}):\n\n"
+        
+        for sensor in page_sensors:
+            friendly_name = sensor['friendly_name']
+            if len(friendly_name) > 25:
+                friendly_name = friendly_name[:22] + "..."
+            
+            state = sensor['state']
+            unit = sensor.get('unit', '')
+            
+            # Обрезаем слишком длинные значения
+            if len(str(state)) > 15:
+                state = str(state)[:12] + "..."
+            
+            message += f"📊 {friendly_name}\n"
+            message += f"   `{sensor['entity_id']}`\n"
+            message += f"   📈 {state} {unit}\n\n"
+        
+        # Добавляем навигацию
+        nav_line = ""
+        if page > 1:
+            nav_line += f"⬅️ `/sensors {page - 1}` | "
+        nav_line += f"📄 {page}/{total_pages}"
+        if page < total_pages:
+            nav_line += f" | `/sensors {page + 1}` ➡️"
+        
+        message += f"\n{nav_line}\n\n"
+        message += f"Всего датчиков: {len(sensors_data)}"
+        
+        await loading_msg.edit_text(message, parse_mode='Markdown')
     except Exception as e:
         logger.error(f"Sensors command error: {e}")
-        await update.message.reply_text(f"❌ Error getting sensors: {str(e)}")
+        await update.message.reply_text(f"❌ Ошибка при получении датчиков: {str(e)}")
 
 async def unknown_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle unknown commands."""
