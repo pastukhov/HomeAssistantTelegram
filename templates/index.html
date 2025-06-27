@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Home Assistant Telegram Bot{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>
+                <i class="fas fa-tachometer-alt me-2"></i>
+                Dashboard
+            </h1>
+            {% if ha_connected %}
+                <span class="badge bg-success fs-6">
+                    <i class="fas fa-check-circle me-1"></i>Connected
+                </span>
+            {% else %}
+                <span class="badge bg-danger fs-6">
+                    <i class="fas fa-exclamation-triangle me-1"></i>Disconnected
+                </span>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+{% if error %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="alert alert-danger" role="alert">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            <strong>Connection Error:</strong> {{ error }}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- System Overview -->
+<div class="row mb-4">
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="fas fa-cubes fa-2x mb-2 text-info"></i>
+                <h5 class="card-title">Total Entities</h5>
+                <h3 class="text-info">{{ system_info.total_entities }}</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="fas fa-lightbulb fa-2x mb-2 text-warning"></i>
+                <h5 class="card-title">Lights</h5>
+                <h3 class="text-warning">{{ system_info.lights }}</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="fas fa-toggle-on fa-2x mb-2 text-primary"></i>
+                <h5 class="card-title">Switches</h5>
+                <h3 class="text-primary">{{ system_info.switches }}</h3>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 col-sm-6 mb-3">
+        <div class="card">
+            <div class="card-body text-center">
+                <i class="fas fa-thermometer-half fa-2x mb-2 text-success"></i>
+                <h5 class="card-title">Sensors</h5>
+                <h3 class="text-success">{{ system_info.sensors }}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bot Commands Help -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fab fa-telegram me-2"></i>
+                    Telegram Bot Commands
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="text-info">Device Control:</h6>
+                        <ul class="list-unstyled">
+                            <li><code>/lights</code> - List all lights</li>
+                            <li><code>/light_on &lt;entity_id&gt;</code> - Turn on light</li>
+                            <li><code>/light_off &lt;entity_id&gt;</code> - Turn off light</li>
+                            <li><code>/switches</code> - List all switches</li>
+                            <li><code>/switch_on &lt;entity_id&gt;</code> - Turn on switch</li>
+                            <li><code>/switch_off &lt;entity_id&gt;</code> - Turn off switch</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="text-success">Information:</h6>
+                        <ul class="list-unstyled">
+                            <li><code>/status</code> - System status</li>
+                            <li><code>/sensors</code> - Sensor readings</li>
+                            <li><code>/help</code> - Show help message</li>
+                        </ul>
+                        
+                        <h6 class="text-warning mt-3">Examples:</h6>
+                        <ul class="list-unstyled">
+                            <li><code>/light_on light.kitchen</code></li>
+                            <li><code>/switch_off switch.garden</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Lights Status -->
+{% if recent_lights %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    Recent Lights Status
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Friendly Name</th>
+                                <th>Entity ID</th>
+                                <th>State</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for light in recent_lights %}
+                            <tr>
+                                <td>
+                                    {% if light.state == 'on' %}
+                                        <i class="fas fa-circle text-success"></i>
+                                    {% else %}
+                                        <i class="fas fa-circle text-secondary"></i>
+                                    {% endif %}
+                                </td>
+                                <td>{{ light.friendly_name }}</td>
+                                <td><code>{{ light.entity_id }}</code></td>
+                                <td>
+                                    <span class="badge {% if light.state == 'on' %}bg-success{% else %}bg-secondary{% endif %}">
+                                        {{ light.state }}
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Setup Instructions -->
+{% if not ha_connected %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card border-info">
+            <div class="card-header bg-info">
+                <h5 class="mb-0 text-dark">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Setup Instructions
+                </h5>
+            </div>
+            <div class="card-body">
+                <p>To get started with the Home Assistant Telegram Bot, you need to configure the following environment variables:</p>
+                
+                <h6>Required Environment Variables:</h6>
+                <ul>
+                    <li><strong>TELEGRAM_BOT_TOKEN</strong> - Your Telegram bot token from @BotFather</li>
+                    <li><strong>HOME_ASSISTANT_URL</strong> - Your Home Assistant URL (e.g., http://localhost:8123)</li>
+                    <li><strong>HOME_ASSISTANT_TOKEN</strong> - Long-lived access token from Home Assistant</li>
+                    <li><strong>SESSION_SECRET</strong> - Secret key for Flask sessions</li>
+                </ul>
+                
+                <h6 class="mt-3">Creating a Home Assistant Token:</h6>
+                <ol>
+                    <li>Go to your Home Assistant Profile page</li>
+                    <li>Scroll down to "Long-Lived Access Tokens"</li>
+                    <li>Click "Create Token"</li>
+                    <li>Copy the generated token and set it as HOME_ASSISTANT_TOKEN</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Auto-refresh the page every 30 seconds if connected
+{% if ha_connected %}
+setTimeout(function() {
+    location.reload();
+}, 30000);
+{% endif %}
+
+// Add real-time status indicator
+function updateConnectionStatus() {
+    fetch('/api/status')
+        .then(response => response.json())
+        .then(data => {
+            const badge = document.querySelector('.badge');
+            if (data.status === 'connected') {
+                badge.className = 'badge bg-success fs-6';
+                badge.innerHTML = '<i class="fas fa-check-circle me-1"></i>Connected';
+            } else {
+                badge.className = 'badge bg-danger fs-6';
+                badge.innerHTML = '<i class="fas fa-exclamation-triangle me-1"></i>Disconnected';
+            }
+        })
+        .catch(error => {
+            console.error('Status check failed:', error);
+        });
+}
+
+// Check status every 10 seconds
+setInterval(updateConnectionStatus, 10000);
+</script>
+{% endblock %}
