@@ -81,7 +81,10 @@ Required environment variables:
 
 ## Changelog
 
-- June 27, 2025. Initial setup
+- June 27, 2025: Initial setup and configuration
+- June 27, 2025: Successfully connected to Home Assistant instance
+- June 27, 2025: Fixed Telegram bot imports and dependencies
+- June 27, 2025: Added Russian language support for bot commands (/start and /help)
 
 ## User Preferences
 

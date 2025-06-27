@@ -18,46 +18,57 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     welcome_message = """
 🏠 *Home Assistant Telegram Bot*
 
-Welcome! I can help you control your Home Assistant devices.
+Добро пожаловать! Я помогу вам управлять устройствами Home Assistant через Telegram.
 
-Available commands:
-/help - Show this help message
-/status - Show system status
-/lights - List all lights
-/light\_on <entity\_id> - Turn on a light
-/light\_off <entity\_id> - Turn off a light
-/switches - List all switches
-/switch\_on <entity\_id> - Turn on a switch
-/switch\_off <entity\_id> - Turn off a switch
-/sensors - List sensor values
+*Основные команды:*
 
-Example: `/light_on light.living_room`
+📊 *Информация:*
+/help - Показать справку
+/status - Статус системы
+/sensors - Показания датчиков
+
+💡 *Управление освещением:*
+/lights - Список всех светильников
+/light\_on <entity\_id> - Включить свет
+/light\_off <entity\_id> - Выключить свет
+
+🔌 *Управление выключателями:*
+/switches - Список всех выключателей
+/switch\_on <entity\_id> - Включить выключатель
+/switch\_off <entity\_id> - Выключить выключатель
+
+*Примеры использования:*
+`/light_on light.kitchen`
+`/switch_off switch.garden_lights`
+
+💡 *Совет:* Используйте /lights или /switches чтобы увидеть доступные устройства
     """
     await update.message.reply_text(welcome_message, parse_mode='Markdown')
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Send a message when the command /help is issued."""
     help_text = """
-🤖 *Home Assistant Bot Commands*
+🤖 *Справка по командам Home Assistant Bot*
 
-*Device Control:*
-/lights - List all lights and their states
-/light\_on <entity\_id> - Turn on a specific light
-/light\_off <entity\_id> - Turn off a specific light
+📊 *Информация о системе:*
+/status - Показать статус системы Home Assistant
+/sensors - Показать показания датчиков
 
-/switches - List all switches and their states
-/switch\_on <entity\_id> - Turn on a specific switch
-/switch\_off <entity\_id> - Turn off a specific switch
+💡 *Управление освещением:*
+/lights - Список всех светильников и их состояние
+/light\_on <entity\_id> - Включить указанный светильник
+/light\_off <entity\_id> - Выключить указанный светильник
 
-*Information:*
-/status - Show Home Assistant system status
-/sensors - Show sensor readings
+🔌 *Управление выключателями:*
+/switches - Список всех выключателей и их состояние
+/switch\_on <entity\_id> - Включить указанный выключатель
+/switch\_off <entity\_id> - Выключить указанный выключатель
 
-*Examples:*
-`/light_on light.kitchen`
-`/switch_off switch.garden_lights`
+*Примеры использования:*
+`/light_on light.kitchen` - включить свет на кухне
+`/switch_off switch.garden_lights` - выключить садовое освещение
 
-💡 *Tip:* Use /lights or /switches to see available entity IDs
+💡 *Совет:* Используйте команды /lights или /switches чтобы увидеть доступные устройства и их entity\_id
     """
     await update.message.reply_text(help_text, parse_mode='Markdown')
 
