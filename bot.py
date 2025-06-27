@@ -167,36 +167,36 @@ async def lights(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
 async def light_on(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Turn on a light."""
     if not context.args:
-        await update.message.reply_text("❌ Please specify a light entity ID.\nExample: `/light_on light.kitchen`", parse_mode='Markdown')
+        await update.message.reply_text("❌ Укажите ID светового устройства.\nПример: `/light_on light.kitchen`", parse_mode='Markdown')
         return
     
     entity_id = context.args[0]
     try:
         result = ha_api.turn_on_light(entity_id)
         if result:
-            await update.message.reply_text(f"✅ Light `{entity_id}` turned on", parse_mode='Markdown')
+            await update.message.reply_text(f"✅ Световое устройство `{entity_id}` включено", parse_mode='Markdown')
         else:
-            await update.message.reply_text(f"❌ Failed to turn on light `{entity_id}`", parse_mode='Markdown')
+            await update.message.reply_text(f"❌ Не удалось включить устройство `{entity_id}`\n\nВозможные причины:\n• Устройство недоступно\n• Неверный entity_id\n• Проблемы с сетью", parse_mode='Markdown')
     except Exception as e:
         logger.error(f"Light on command error: {e}")
-        await update.message.reply_text(f"❌ Error controlling light: {str(e)}")
+        await update.message.reply_text(f"❌ Ошибка управления освещением: {str(e)}")
 
 async def light_off(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Turn off a light."""
     if not context.args:
-        await update.message.reply_text("❌ Please specify a light entity ID.\nExample: `/light_off light.kitchen`", parse_mode='Markdown')
+        await update.message.reply_text("❌ Укажите ID светового устройства.\nПример: `/light_off light.kitchen`", parse_mode='Markdown')
         return
     
     entity_id = context.args[0]
     try:
         result = ha_api.turn_off_light(entity_id)
         if result:
-            await update.message.reply_text(f"✅ Light `{entity_id}` turned off", parse_mode='Markdown')
+            await update.message.reply_text(f"✅ Световое устройство `{entity_id}` выключено", parse_mode='Markdown')
         else:
-            await update.message.reply_text(f"❌ Failed to turn off light `{entity_id}`", parse_mode='Markdown')
+            await update.message.reply_text(f"❌ Не удалось выключить устройство `{entity_id}`\n\nВозможные причины:\n• Устройство недоступно\n• Неверный entity_id\n• Проблемы с сетью", parse_mode='Markdown')
     except Exception as e:
         logger.error(f"Light off command error: {e}")
-        await update.message.reply_text(f"❌ Error controlling light: {str(e)}")
+        await update.message.reply_text(f"❌ Ошибка управления освещением: {str(e)}")
 
 async def switches(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """List all switches and their states with pagination."""

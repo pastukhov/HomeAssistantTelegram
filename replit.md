@@ -91,6 +91,9 @@ Required environment variables:
 - June 27, 2025: Fixed JSON parsing errors for large Home Assistant responses (715+ entities)
 - June 27, 2025: Enhanced Telegram bot error handling with informative Russian messages
 - June 27, 2025: Optimized /lights command to handle large device collections efficiently
+- June 27, 2025: Implemented pagination for all device commands (/lights, /switches, /sensors)
+- June 27, 2025: Fixed device control API responses and improved diagnostic logging
+- June 27, 2025: Enhanced user experience with Russian language error messages and detailed feedback
 
 ## User Preferences
 

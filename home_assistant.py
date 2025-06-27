@@ -74,12 +74,34 @@ class HomeAssistantAPI:
     
     def call_service(self, domain: str, service: str, entity_id: str) -> bool:
         """Call a Home Assistant service."""
-        data = {
-            'entity_id': entity_id
-        }
-        
-        result = self._make_request('POST', f'services/{domain}/{service}', data)
-        return result is not None
+        try:
+            data = {
+                'entity_id': entity_id
+            }
+            
+            url = f"{self.base_url}/api/services/{domain}/{service}"
+            logger.debug(f"Calling service: {url} with data: {data}")
+            
+            response = requests.post(
+                url,
+                headers=self.headers,
+                json=data,
+                timeout=15
+            )
+            
+            logger.debug(f"Service call response: {response.status_code} - {response.text[:200]}")
+            
+            # Home Assistant API возвращает 200 для успешных команд
+            # Даже если устройство недоступно, команда может быть принята
+            if response.status_code == 200:
+                return True
+            else:
+                logger.error(f"Service call failed: {response.status_code} - {response.text}")
+                return False
+                
+        except Exception as e:
+            logger.error(f"Service call error: {e}")
+            return False
     
     def get_lights(self) -> List[Dict]:
         """Get all light entities and their states."""
