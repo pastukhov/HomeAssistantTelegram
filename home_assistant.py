@@ -44,15 +44,23 @@ class HomeAssistantAPI:
                 try:
                     return response.json()
                 except ValueError as json_error:
-                    logger.error(f"JSON parsing error: {json_error}")
+                    logger.error(f"JSON parsing error in {method} {endpoint}: {json_error}")
                     logger.error(f"Response content length: {len(response.content)} bytes")
+                    logger.error(f"Response status: {response.status_code}")
+                    logger.error(f"Response headers: {dict(response.headers)}")
+                    
+                    # Логируем полный контекст для отладки
+                    import traceback
+                    logger.error(f"Call stack: {traceback.format_stack()}")
+                    
                     # Попробуем обрезать ответ и попробовать снова
                     if len(response.content) > 100000:  # Если ответ больше 100KB
                         logger.warning("Response too large, trying alternative approach")
                         return None
                     else:
                         logger.error(f"Response preview: {response.text[:500]}...")
-                        return None
+                        # Выбрасываем исключение для передачи в бот
+                        raise json_error
             else:
                 logger.error(f"API request failed: {response.status_code} - {response.text}")
                 return None
