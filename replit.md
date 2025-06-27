@@ -66,12 +66,19 @@ The system uses a multi-threaded approach where the Flask application runs in a 
 
 ## Deployment Strategy
 
-The application is configured for Replit deployment with:
+The application supports multiple deployment options:
 
+### Replit Deployment
 - **Autoscale deployment target** for automatic scaling
 - **Gunicorn WSGI server** binding to 0.0.0.0:5000
 - **Environment-based configuration** for Home Assistant connection
 - **Multi-process support** with reload capabilities for development
+
+### Docker Deployment  
+- **Multi-container architecture** with PostgreSQL, Application, and optional Nginx
+- **Production-ready** with health checks, monitoring, and SSL support
+- **Development mode** with live reload and debugging capabilities
+- **Automated database initialization** and migration support
 
 Required environment variables:
 - `HOME_ASSISTANT_URL`: Base URL for Home Assistant instance
@@ -97,6 +104,10 @@ Required environment variables:
 - June 27, 2025: Implemented smart device state checking to prevent unnecessary API calls and HTTP 500 errors
 - June 27, 2025: Added intelligent error handling for grouped light devices (like Yeelight groups)
 - June 27, 2025: Improved user feedback with device state awareness (already on/off notifications)
+- June 27, 2025: Created comprehensive Docker deployment configuration with production and development setups
+- June 27, 2025: Added PostgreSQL database integration with automated initialization
+- June 27, 2025: Implemented Nginx reverse proxy with SSL support and security headers
+- June 27, 2025: Added health checks, monitoring, and logging capabilities for containerized deployment
 
 ## User Preferences
 

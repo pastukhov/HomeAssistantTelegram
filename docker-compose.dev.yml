@@ -1,0 +1,63 @@
+# Development версия Docker Compose
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: ha_telegram_db_dev
+    environment:
+      POSTGRES_DB: ha_telegram_bot_dev
+      POSTGRES_USER: ha_bot_user
+      POSTGRES_PASSWORD: dev_password_123
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"  # Другой порт для dev
+    networks:
+      - ha_bot_network_dev
+    restart: unless-stopped
+
+  # Home Assistant Telegram Bot (Development)
+  ha_telegram_bot_dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: ha_telegram_bot_dev
+    environment:
+      # Database configuration
+      DATABASE_URL: postgresql://ha_bot_user:dev_password_123@postgres:5432/ha_telegram_bot_dev
+      
+      # Home Assistant configuration
+      HOME_ASSISTANT_URL: ${HOME_ASSISTANT_URL}
+      HOME_ASSISTANT_TOKEN: ${HOME_ASSISTANT_TOKEN}
+      
+      # Telegram Bot configuration
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN}
+      
+      # Flask configuration
+      SESSION_SECRET: ${SESSION_SECRET:-dev_secret_key}
+      FLASK_ENV: development
+      FLASK_DEBUG: 1
+      
+      # Logging configuration
+      PYTHONUNBUFFERED: 1
+    ports:
+      - "5001:5000"  # Другой порт для dev
+    volumes:
+      - .:/app  # Монтируем исходный код для live reload
+      - ./logs:/app/logs
+    networks:
+      - ha_bot_network_dev
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    command: ["python", "-m", "flask", "run", "--host=0.0.0.0", "--port=5000", "--debug"]
+
+volumes:
+  postgres_dev_data:
+
+networks:
+  ha_bot_network_dev:
+    driver: bridge
