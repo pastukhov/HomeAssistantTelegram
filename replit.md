@@ -84,24 +84,16 @@ The system uses a multi-threaded approach where the Flask application runs in a 
 - **threading**: Multi-threaded metrics server
 
 ### Infrastructure
-- **PostgreSQL**: Database system (configured but not actively used in current codebase)
 - **OpenSSL**: Secure communication support
 
 ## Deployment Strategy
 
-The application supports multiple deployment options:
-
-### Replit Deployment
+### Replit Deployment (Recommended)
 - **Autoscale deployment target** for automatic scaling
 - **Gunicorn WSGI server** binding to 0.0.0.0:5000
 - **Environment-based configuration** for Home Assistant connection
 - **Multi-process support** with reload capabilities for development
-
-### Docker Deployment  
-- **Multi-container architecture** with PostgreSQL, Application, and optional Nginx
-- **Production-ready** with health checks, monitoring, and SSL support
-- **Development mode** with live reload and debugging capabilities
-- **Automated database initialization** and migration support
+- **No database dependencies** - minimal setup required
 
 Required environment variables:
 - `HOME_ASSISTANT_URL`: Base URL for Home Assistant instance
@@ -127,14 +119,11 @@ Required environment variables:
 - June 27, 2025: Implemented smart device state checking to prevent unnecessary API calls and HTTP 500 errors
 - June 27, 2025: Added intelligent error handling for grouped light devices (like Yeelight groups)
 - June 27, 2025: Improved user feedback with device state awareness (already on/off notifications)
-- June 27, 2025: Created comprehensive Docker deployment configuration with production and development setups
-- June 27, 2025: Added PostgreSQL database integration with automated initialization
-- June 27, 2025: Implemented Nginx reverse proxy with SSL support and security headers
-- June 27, 2025: Added health checks, monitoring, and logging capabilities for containerized deployment
 - June 27, 2025: Implemented comprehensive OpenMetrics monitoring system with prometheus_client integration
 - June 27, 2025: Added real-time metrics dashboard to web interface with auto-updating performance indicators
 - June 27, 2025: Integrated metrics tracking for all Telegram bot commands and Home Assistant API calls
 - June 27, 2025: Created /metrics endpoint for Prometheus scraping and /api/metrics-summary for dashboard consumption
+- June 28, 2025: Removed PostgreSQL database dependencies and Docker configurations to simplify deployment
 
 ## User Preferences
 

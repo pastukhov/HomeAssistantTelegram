@@ -39,7 +39,7 @@ SESSION_SECRET=your_flask_session_secret
 ### 2. Установка зависимостей
 
 ```bash
-pip install flask python-telegram-bot requests gunicorn flask-sqlalchemy psycopg2-binary
+pip install flask python-telegram-bot requests gunicorn prometheus-client
 ```
 
 ### 3. Запуск приложения
