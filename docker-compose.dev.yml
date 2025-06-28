@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Home Assistant Telegram Bot - Development Mode
+  ha_telegram_bot_dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ha_telegram_bot_dev
+    environment:
+      - HOME_ASSISTANT_URL=${HOME_ASSISTANT_URL:-http://homeassistant.local:8123}
+      - HOME_ASSISTANT_TOKEN=${HOME_ASSISTANT_TOKEN}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - SESSION_SECRET=${SESSION_SECRET:-dev-secret-key-change-in-production}
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    ports:
+      - "5000:5000"
+      - "8000:8000"  # Metrics port
+    networks:
+      - ha_bot_dev_network
+    restart: unless-stopped
+    volumes:
+      - .:/app  # Mount source code for live reload
+      - ./logs:/app/logs
+    command: ["python", "main.py"]  # Use development server
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+
+networks:
+  ha_bot_dev_network:
+    driver: bridge
+
+volumes:
+  logs:
+    driver: local

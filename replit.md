@@ -95,6 +95,13 @@ The system uses a multi-threaded approach where the Flask application runs in a 
 - **Multi-process support** with reload capabilities for development
 - **No database dependencies** - minimal setup required
 
+### Docker Deployment
+- **Lightweight containerized deployment** without database dependencies
+- **Production and development configurations** available
+- **Health checks and monitoring** built-in
+- **Simplified architecture** - only application container needed
+- **Optional Traefik/Nginx integration** for reverse proxy
+
 Required environment variables:
 - `HOME_ASSISTANT_URL`: Base URL for Home Assistant instance
 - `HOME_ASSISTANT_TOKEN`: Bearer token for API authentication
@@ -124,6 +131,7 @@ Required environment variables:
 - June 27, 2025: Integrated metrics tracking for all Telegram bot commands and Home Assistant API calls
 - June 27, 2025: Created /metrics endpoint for Prometheus scraping and /api/metrics-summary for dashboard consumption
 - June 28, 2025: Removed PostgreSQL database dependencies and Docker configurations to simplify deployment
+- June 28, 2025: Restored simplified Docker configurations without database dependencies for containerized deployment
 
 ## User Preferences
 

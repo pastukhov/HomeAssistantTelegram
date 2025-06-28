@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Home Assistant Telegram Bot Application
+  ha_telegram_bot:
+    build: .
+    container_name: ha_telegram_bot_app
+    environment:
+      - HOME_ASSISTANT_URL=${HOME_ASSISTANT_URL}
+      - HOME_ASSISTANT_TOKEN=${HOME_ASSISTANT_TOKEN}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - SESSION_SECRET=${SESSION_SECRET}
+    ports:
+      - "5000:5000"
+      - "8000:8000"  # Metrics port
+    networks:
+      - ha_bot_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - ./logs:/app/logs  # Optional: mount logs directory
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ha-bot.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.ha-bot.tls=true"
+      - "traefik.http.routers.ha-bot.tls.certresolver=letsencrypt"
+
+networks:
+  ha_bot_network:
+    driver: bridge
+
+# Optional: Uncomment if you want to persist logs
+# volumes:
+#   logs:
+#     driver: local
