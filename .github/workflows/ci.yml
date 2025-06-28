@@ -48,15 +48,16 @@ jobs:
         uv run pytest --cov=. --cov-report=xml --cov-report=html --cov-report=term-missing --verbose
 
     - name: Upload coverage to Codecov
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         file: ./coverage.xml
         flags: unittests
         name: codecov-umbrella
         fail_ci_if_error: false
+        token: ${{ secrets.CODECOV_TOKEN }}
 
     - name: Upload coverage artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-report
         path: htmlcov/
@@ -105,16 +106,32 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Run security scan
-      uses: securecodewarrior/github-action-add-sarif@v1
+    - name: Set up Python
+      uses: actions/setup-python@v4
       with:
-        sarif-file: 'security-scan-results.sarif'
-      continue-on-error: true
+        python-version: 3.11
 
-    - name: Check for security vulnerabilities
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+      with:
+        version: "latest"
+
+    - name: Install dependencies for security scan
       run: |
-        pip install safety
-        safety check --json --output safety-report.json || true
+        uv sync --frozen
+
+    - name: Check for security vulnerabilities with safety
+      run: |
+        uv add safety
+        uv run safety check --json --output safety-report.json || true
+        echo "Security scan completed"
+
+    - name: Upload security report
+      uses: actions/upload-artifact@v4
+      with:
+        name: security-report
+        path: safety-report.json
+      if: always()
 
   lint:
     runs-on: ubuntu-latest

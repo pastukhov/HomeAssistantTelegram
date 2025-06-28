@@ -107,11 +107,14 @@ python -m py_compile *.py
 
 **GitHub Actions переменные:**
 ```yaml
-# В файле .github/workflows/ci.yml замените:
-HOME_ASSISTANT_URL: ${{ secrets.HOME_ASSISTANT_URL }}
-HOME_ASSISTANT_TOKEN: ${{ secrets.HOME_ASSISTANT_TOKEN }}
-TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-SESSION_SECRET: ${{ secrets.SESSION_SECRET }}
+# В файле .github/workflows/ci.yml уже настроены тестовые значения:
+HOME_ASSISTANT_URL=http://test-ha.local:8123
+HOME_ASSISTANT_TOKEN=test_token_123
+TELEGRAM_BOT_TOKEN=test_bot_token_456
+SESSION_SECRET=test_secret_key
+
+# Для Codecov интеграции добавьте в Secrets:
+CODECOV_TOKEN: <your_codecov_token>
 ```
 
 ### 6. После создания MR
