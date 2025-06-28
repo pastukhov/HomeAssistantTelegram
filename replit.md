@@ -83,8 +83,49 @@ The system uses a multi-threaded approach where the Flask application runs in a 
 - **psutil** (via metrics): System resource monitoring
 - **threading**: Multi-threaded metrics server
 
+### Testing Dependencies
+- **pytest**: Main testing framework with async support
+- **pytest-cov**: Code coverage measurement and reporting
+- **pytest-mock**: Enhanced mocking capabilities for unit tests
+- **pytest-asyncio**: Testing support for asynchronous code
+- **coverage**: Comprehensive coverage analysis and reporting
+
 ### Infrastructure
 - **OpenSSL**: Secure communication support
+
+## Testing and Quality Assurance
+
+### Test Framework
+- **Comprehensive unit testing** with pytest framework supporting async operations
+- **Code coverage measurement** with pytest-cov generating HTML and XML reports
+- **Mocking and fixtures** for isolated component testing
+- **CI/CD integration** with GitHub Actions for automated testing
+
+### Test Structure
+```
+tests/
+├── __init__.py              # Test package initialization
+├── conftest.py             # Shared fixtures and test configuration
+├── test_basic.py           # Basic functionality and import tests
+├── test_home_assistant.py  # Home Assistant API client tests
+├── test_bot.py            # Telegram bot command tests (async)
+├── test_app.py            # Flask web application tests
+└── test_metrics.py        # OpenMetrics system tests
+```
+
+### Coverage Reporting
+- **HTML reports** generated in `htmlcov/` directory for detailed analysis
+- **XML reports** for continuous integration tools (Codecov)
+- **Terminal output** with missing line indicators for quick feedback
+- **Current coverage**: 55% across core modules (app.py, home_assistant.py, metrics.py)
+
+### GitHub Actions CI/CD
+- **Automated testing** on push to main/develop branches and pull requests
+- **Multi-environment testing** with Python 3.11 matrix support
+- **Security scanning** with safety check for vulnerabilities
+- **Code quality** verification with black, isort, and flake8 linters
+- **Docker build testing** to ensure containerization compatibility
+- **Coverage reporting** integration with Codecov for badge generation
 
 ## Deployment Strategy
 
@@ -132,6 +173,8 @@ Required environment variables:
 - June 27, 2025: Created /metrics endpoint for Prometheus scraping and /api/metrics-summary for dashboard consumption
 - June 28, 2025: Removed PostgreSQL database dependencies and Docker configurations to simplify deployment
 - June 28, 2025: Restored simplified Docker configurations without database dependencies for containerized deployment
+- June 28, 2025: Added comprehensive unit testing framework with pytest, coverage reporting, and GitHub Actions CI/CD pipeline
+- June 28, 2025: Implemented test coverage reporting with HTML and XML output for continuous integration
 
 ## User Preferences
 

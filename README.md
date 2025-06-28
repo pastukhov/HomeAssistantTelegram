@@ -1,5 +1,10 @@
 # Home Assistant Telegram Bot
 
+![CI/CD Pipeline](https://github.com/username/home-assistant-telegram-bot/workflows/CI/CD%20Pipeline/badge.svg)
+![Coverage](https://codecov.io/gh/username/home-assistant-telegram-bot/branch/main/graph/badge.svg)
+![Python Version](https://img.shields.io/badge/python-3.11-blue.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
+
 Система управления умным домом через Telegram бот с веб-интерфейсом на базе Flask.
 
 ## Возможности
@@ -57,6 +62,51 @@ python telegram_bot_service.py
 ```bash
 python main.py
 ```
+
+## Тестирование
+
+### Запуск тестов
+
+```bash
+# Запуск всех тестов с покрытием
+pytest --cov=. --cov-report=html --cov-report=term-missing
+
+# Запуск отдельных тестовых модулей
+pytest tests/test_home_assistant.py -v
+pytest tests/test_bot.py -v
+pytest tests/test_app.py -v
+pytest tests/test_metrics.py -v
+
+# Запуск асинхронных тестов
+pytest tests/test_bot.py::TestTelegramBot::test_start_command -v
+```
+
+### Структура тестов
+
+```
+tests/
+├── __init__.py              # Инициализация пакета тестов
+├── conftest.py             # Фикстуры и конфигурация pytest
+├── test_home_assistant.py  # Тесты Home Assistant API
+├── test_bot.py            # Тесты Telegram бота
+├── test_app.py            # Тесты Flask приложения
+└── test_metrics.py        # Тесты системы метрик
+```
+
+### Покрытие кода
+
+- Автоматическое измерение покрытия при каждом запуске тестов
+- HTML отчет в папке `htmlcov/`
+- XML отчет для интеграции с CI/CD
+- Минимальное покрытие: 80%
+
+### CI/CD Pipeline
+
+- **GitHub Actions** для автоматического тестирования
+- **Codecov** интеграция для отслеживания покрытия
+- **Docker** тестирование сборки образа
+- **Security scanning** для проверки уязвимостей
+- **Code linting** с black, isort, flake8
 
 ## Архитектура
 
