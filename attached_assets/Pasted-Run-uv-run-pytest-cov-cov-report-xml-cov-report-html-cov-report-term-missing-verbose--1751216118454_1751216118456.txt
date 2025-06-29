@@ -1,0 +1,1284 @@
+Run uv run pytest --cov=. --cov-report=xml --cov-report=html --cov-report=term-missing --verbose
+============================= test session starts ==============================
+platform linux -- Python 3.11.13, pytest-8.4.1, pluggy-1.6.0 -- /home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/.venv/bin/python
+cachedir: .pytest_cache
+rootdir: /home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram
+configfile: pytest.ini
+plugins: asyncio-1.0.0, anyio-4.9.0, mock-3.14.1, cov-6.2.1
+asyncio: mode=Mode.STRICT, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 54 items
+
+tests/test_app.py::TestFlaskApp::test_index_route FAILED                 [  1%]
+tests/test_app.py::TestFlaskApp::test_api_status_success FAILED          [  3%]
+tests/test_app.py::TestFlaskApp::test_api_status_failure FAILED          [  5%]
+tests/test_app.py::TestFlaskApp::test_api_lights FAILED                  [  7%]
+tests/test_app.py::TestFlaskApp::test_api_lights_error FAILED            [  9%]
+tests/test_app.py::TestFlaskApp::test_metrics_endpoint PASSED            [ 11%]
+tests/test_app.py::TestFlaskApp::test_api_metrics_summary FAILED         [ 12%]
+tests/test_app.py::TestFlaskApp::test_nonexistent_route PASSED           [ 14%]
+tests/test_app.py::TestFlaskApp::test_telegram_bot_running_check FAILED  [ 16%]
+tests/test_basic.py::TestBasicFunctionality::test_environment_variables PASSED [ 18%]
+tests/test_basic.py::TestBasicFunctionality::test_imports PASSED         [ 20%]
+tests/test_basic.py::TestBasicFunctionality::test_home_assistant_init PASSED [ 22%]
+tests/test_basic.py::TestBasicFunctionality::test_metrics_collector_init PASSED [ 24%]
+tests/test_basic.py::TestBasicFunctionality::test_flask_app_creation FAILED [ 25%]
+tests/test_basic.py::TestBasicFunctionality::test_telegram_bot_service_exists PASSED [ 27%]
+tests/test_basic.py::TestBasicFunctionality::test_bot_file_exists PASSED [ 29%]
+tests/test_basic.py::TestBasicFunctionality::test_app_routes_exist PASSED [ 31%]
+tests/test_bot.py::TestTelegramBot::test_start_command PASSED            [ 33%]
+tests/test_bot.py::TestTelegramBot::test_help_command FAILED             [ 35%]
+tests/test_bot.py::TestTelegramBot::test_status_command_success FAILED   [ 37%]
+tests/test_bot.py::TestTelegramBot::test_status_command_failure FAILED   [ 38%]
+tests/test_bot.py::TestTelegramBot::test_lights_command FAILED           [ 40%]
+tests/test_bot.py::TestTelegramBot::test_light_on_command_success FAILED [ 42%]
+tests/test_bot.py::TestTelegramBot::test_light_on_already_on FAILED      [ 44%]
+tests/test_bot.py::TestTelegramBot::test_light_off_command_success FAILED [ 46%]
+tests/test_bot.py::TestTelegramBot::test_switches_command FAILED         [ 48%]
+tests/test_bot.py::TestTelegramBot::test_sensors_command FAILED          [ 50%]
+tests/test_bot.py::TestTelegramBot::test_light_on_no_args FAILED         [ 51%]
+tests/test_bot.py::TestTelegramBot::test_light_off_no_args FAILED        [ 53%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_init PASSED     [ 55%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_get_all_states_success FAILED [ 57%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_get_all_states_failure PASSED [ 59%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_call_service_success FAILED [ 61%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_call_service_failure PASSED [ 62%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_get_lights PASSED [ 64%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_get_switches PASSED [ 66%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_get_sensors PASSED [ 68%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_turn_on_light PASSED [ 70%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_turn_off_light PASSED [ 72%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_test_connection_success FAILED [ 74%]
+tests/test_home_assistant.py::TestHomeAssistantAPI::test_test_connection_failure PASSED [ 75%]
+tests/test_metrics.py::TestMetricsCollector::test_init PASSED            [ 77%]
+tests/test_metrics.py::TestMetricsCollector::test_update_app_uptime PASSED [ 79%]
+tests/test_metrics.py::TestMetricsCollector::test_update_memory_usage FAILED [ 81%]
+tests/test_metrics.py::TestMetricsCollector::test_record_telegram_command PASSED [ 83%]
+tests/test_metrics.py::TestMetricsCollector::test_record_homeassistant_request PASSED [ 85%]
+tests/test_metrics.py::TestMetricsCollector::test_record_device_command PASSED [ 87%]
+tests/test_metrics.py::TestMetricsCollector::test_update_device_status PASSED [ 88%]
+tests/test_metrics.py::TestMetricsCollector::test_update_homeassistant_entities PASSED [ 90%]
+tests/test_metrics.py::TestMetricsCollector::test_cleanup_active_users PASSED [ 92%]
+tests/test_metrics.py::TestMetricsCollector::test_get_metrics_summary FAILED [ 94%]
+tests/test_metrics.py::TestMetricsDecorators::test_track_telegram_command_decorator PASSED [ 96%]
+tests/test_metrics.py::TestMetricsDecorators::test_track_homeassistant_request_decorator PASSED [ 98%]
+<unknown>:20: DeprecationWarning: invalid escape sequence '\_'
+<unknown>:53: DeprecationWarning: invalid escape sequence '\['
+/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py:20: DeprecationWarning: invalid escape sequence '\_'
+  welcome_message = """
+/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py:53: DeprecationWarning: invalid escape sequence '\['
+  help_text = """
+<unknown>:20: DeprecationWarning: invalid escape sequence '\_'
+<unknown>:53: DeprecationWarning: invalid escape sequence '\['
+/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py:20: DeprecationWarning: invalid escape sequence '\_'
+  welcome_message = """
+/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py:53: DeprecationWarning: invalid escape sequence '\['
+  help_text = """
+<unknown>:20: DeprecationWarning: invalid escape sequence '\_'
+<unknown>:53: DeprecationWarning: invalid escape sequence '\['
+<unknown>:20: DeprecationWarning: invalid escape sequence '\_'
+<unknown>:53: DeprecationWarning: invalid escape sequence '\['
+<unknown>:20: DeprecationWarning: invalid escape sequence '\_'
+<unknown>:53: DeprecationWarning: invalid escape sequence '\['
+/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py:20: DeprecationWarning: invalid escape sequence '\_'
+  welcome_message = """
+/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py:53: DeprecationWarning: invalid escape sequence '\['
+  help_text = """
+tests/test_metrics.py::TestMetricsDecorators::test_track_telegram_command_with_exception FAILED [100%]
+
+=================================== FAILURES ===================================
+________________________ TestFlaskApp.test_index_route _________________________
+
+self = <tests.test_app.TestFlaskApp object at 0x7f995e6baf50>
+flask_app = <FlaskClient <Flask 'app'>>
+
+    def test_index_route(self, flask_app):
+        """Test main dashboard page"""
+        response = flask_app.get('/')
+        assert response.status_code == 200
+        assert b'Home Assistant Telegram Bot' in response.data
+>       assert b'System Status' in response.data
+E       assert b'System Status' in b'<!DOCTYPE html>\n<html lang="en" data-bs-theme="dark">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Dashboard - Home Assistant Telegram Bot</title>\n    \n    <!-- Bootstrap CSS -->\n    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">\n    \n    <!-- Font Awesome Icons -->\n    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\n    \n    <!-- Custom CSS -->\n    <link rel="stylesheet" href="/static/style.css">\n</head>\n<body>\n    <!-- Navigation -->\n    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">\n        <div class="container">\n            <a class="navbar-brand" href="/">\n                <i class="fas fa-home me-2"></i>\n                Home Assistant Bot\n            </a>\n            \n            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">\n                <span class="navbar-toggler-icon"></span>\n            </button>\n            \n            <div class="collapse navbar-collapse" id="navbarNav">\n                <ul c...\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-pause-circle me-1"></i>Stopped\';\n                        break;\n                    case \'disabled\':\n                        telegramStatus.className = \'badge bg-secondary\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-ban me-1"></i>Disabled\';\n                        break;\n                    default:\n                        telegramStatus.className = \'badge bg-info\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-question-circle me-1"></i>Unknown\';\n                }\n            }\n        })\n        .catch(error => {\n            console.error(\'Status check failed:\', error);\n            const telegramStatus = document.getElementById(\'telegram-status\');\n            if (telegramStatus) {\n                telegramStatus.className = \'badge bg-danger\';\n                telegramStatus.innerHTML = \'<i class="fas fa-exclamation-triangle me-1"></i>Error\';\n            }\n        });\n}\n\n// Check status immediately and then every 10 seconds\nupdateServiceStatus();\nsetInterval(updateServiceStatus, 10000);\n</script>\n\n</body>\n</html>'
+E        +  where b'<!DOCTYPE html>\n<html lang="en" data-bs-theme="dark">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Dashboard - Home Assistant Telegram Bot</title>\n    \n    <!-- Bootstrap CSS -->\n    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">\n    \n    <!-- Font Awesome Icons -->\n    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\n    \n    <!-- Custom CSS -->\n    <link rel="stylesheet" href="/static/style.css">\n</head>\n<body>\n    <!-- Navigation -->\n    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">\n        <div class="container">\n            <a class="navbar-brand" href="/">\n                <i class="fas fa-home me-2"></i>\n                Home Assistant Bot\n            </a>\n            \n            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">\n                <span class="navbar-toggler-icon"></span>\n            </button>\n            \n            <div class="collapse navbar-collapse" id="navbarNav">\n                <ul c...\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-pause-circle me-1"></i>Stopped\';\n                        break;\n                    case \'disabled\':\n                        telegramStatus.className = \'badge bg-secondary\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-ban me-1"></i>Disabled\';\n                        break;\n                    default:\n                        telegramStatus.className = \'badge bg-info\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-question-circle me-1"></i>Unknown\';\n                }\n            }\n        })\n        .catch(error => {\n            console.error(\'Status check failed:\', error);\n            const telegramStatus = document.getElementById(\'telegram-status\');\n            if (telegramStatus) {\n                telegramStatus.className = \'badge bg-danger\';\n                telegramStatus.innerHTML = \'<i class="fas fa-exclamation-triangle me-1"></i>Error\';\n            }\n        });\n}\n\n// Check status immediately and then every 10 seconds\nupdateServiceStatus();\nsetInterval(updateServiceStatus, 10000);\n</script>\n\n</body>\n</html>' = <WrapperTestResponse 13822 bytes [200 OK]>.data
+
+tests/test_app.py:17: AssertionError
+------------------------------ Captured log call -------------------------------
+ERROR    home_assistant:home_assistant.py:71 Request error: HTTPConnectionPool(host='test-ha.local', port=8123): Max retries exceeded with url: /api/states (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x7f995e00da50>: Failed to resolve 'test-ha.local' ([Errno -3] Temporary failure in name resolution)"))
+_____________________ TestFlaskApp.test_api_status_success _____________________
+
+args = (<tests.test_app.TestFlaskApp object at 0x7f995e6ebd10>,)
+keywargs = {'flask_app': <FlaskClient <Flask 'app'>>}
+
+    @wraps(func)
+    def patched(*args, **keywargs):
+>       with self.decoration_helper(patched,
+                                    args,
+                                    keywargs) as (newargs, newkeywargs):
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1375: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995e6eb4d0>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'app' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/app.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+_____________________ TestFlaskApp.test_api_status_failure _____________________
+
+args = (<tests.test_app.TestFlaskApp object at 0x7f995e786550>,)
+keywargs = {'flask_app': <FlaskClient <Flask 'app'>>}
+
+    @wraps(func)
+    def patched(*args, **keywargs):
+>       with self.decoration_helper(patched,
+                                    args,
+                                    keywargs) as (newargs, newkeywargs):
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1375: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995f02d710>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'app' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/app.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+_________________________ TestFlaskApp.test_api_lights _________________________
+
+args = (<tests.test_app.TestFlaskApp object at 0x7f995e786150>,)
+keywargs = {'flask_app': <FlaskClient <Flask 'app'>>}
+
+    @wraps(func)
+    def patched(*args, **keywargs):
+>       with self.decoration_helper(patched,
+                                    args,
+                                    keywargs) as (newargs, newkeywargs):
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1375: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995e999690>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'app' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/app.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+______________________ TestFlaskApp.test_api_lights_error ______________________
+
+args = (<tests.test_app.TestFlaskApp object at 0x7f995e786950>,)
+keywargs = {'flask_app': <FlaskClient <Flask 'app'>>}
+
+    @wraps(func)
+    def patched(*args, **keywargs):
+>       with self.decoration_helper(patched,
+                                    args,
+                                    keywargs) as (newargs, newkeywargs):
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1375: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995e784050>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'app' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/app.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+____________________ TestFlaskApp.test_api_metrics_summary _____________________
+
+self = <tests.test_app.TestFlaskApp object at 0x7f995e787910>
+mock_metrics = <MagicMock name='metrics_collector' id='140296700893904'>
+flask_app = <FlaskClient <Flask 'app'>>
+
+    @patch('app.metrics_collector')
+    def test_api_metrics_summary(self, mock_metrics, flask_app):
+        """Test /api/metrics-summary endpoint"""
+        mock_metrics.get_metrics_summary.return_value = {
+            "app_uptime_seconds": 100,
+            "memory_usage_mb": 50,
+            "total_commands": 10,
+            "successful_commands": 9,
+            "failed_commands": 1,
+            "active_users": 1,
+            "homeassistant_entities": {"light": 5, "switch": 3}
+        }
+    
+        response = flask_app.get('/api/metrics-summary')
+        assert response.status_code == 200
+    
+        data = json.loads(response.data)
+>       assert data['app_uptime_seconds'] == 100
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'app_uptime_seconds'
+
+tests/test_app.py:112: KeyError
+_________________ TestFlaskApp.test_telegram_bot_running_check _________________
+
+self = <tests.test_app.TestFlaskApp object at 0x7f995e793f10>
+mock_exists = <MagicMock name='exists' id='140296664763088'>
+flask_app = <FlaskClient <Flask 'app'>>
+
+    @patch('app.os.path.exists')
+    def test_telegram_bot_running_check(self, mock_exists, flask_app):
+        """Test Telegram bot running status check"""
+        # Test when PID file exists
+        mock_exists.return_value = True
+        response = flask_app.get('/api/status')
+        assert response.status_code == 200
+    
+        data = json.loads(response.data)
+>       assert data['telegram_bot']['running'] is True
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: string indices must be integers, not 'str'
+
+tests/test_app.py:130: TypeError
+------------------------------ Captured log call -------------------------------
+ERROR    home_assistant:home_assistant.py:71 Request error: HTTPConnectionPool(host='test-ha.local', port=8123): Max retries exceeded with url: /api/states (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x7f995cd97b50>: Failed to resolve 'test-ha.local' ([Errno -3] Temporary failure in name resolution)"))
+________________ TestBasicFunctionality.test_flask_app_creation ________________
+
+self = <tests.test_basic.TestBasicFunctionality object at 0x7f995e73ef10>
+
+    def test_flask_app_creation(self):
+        """Test Flask app creation"""
+        from app import app
+    
+        assert app is not None
+>       assert app.config['TESTING'] is False  # Default
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert True is False
+
+tests/test_basic.py:56: AssertionError
+______________________ TestTelegramBot.test_help_command _______________________
+
+self = <tests.test_bot.TestTelegramBot object at 0x7f995e433310>
+mock_update = <Mock spec='Update' id='140296664466512'>
+mock_context = <Mock spec='_GenericAlias' id='140296662333776'>
+
+    @pytest.mark.asyncio
+    async def test_help_command(self, mock_update, mock_context):
+        """Test /help command"""
+        await help_command(mock_update, mock_context)
+    
+        mock_update.message.reply_text.assert_called_once()
+        call_args = mock_update.message.reply_text.call_args[0][0]
+>       assert "Доступные команды" in call_args
+E       AssertionError: assert 'Доступные команды' in '\n🤖 *Справка по командам Home Assistant Bot*\n\n📊 *Информация о системе:*\n/status - Показать статус системы Home Assistant\n/sensors \\[номер\\_страницы\\] - Показания датчиков\n/lights \\[номер\\_страницы\\] - Список светильников\n/switches \\[номер\\_страницы\\] - Список выключателей\n\n💡 *Управление освещением:*\n/light\\_on <entity\\_id> - Включить светильник\n/light\\_off <entity\\_id> - Выключить светильник\n\n🔌 *Управление выключателями:*\n/switch\\_on <entity\\_id> - Включить выключатель\n/switch\\_off <entity\\_id> - Выключить выключатель\n\n*Примеры использования:*\n`/lights` - первая страница световых устройств\n`/lights 2` - вторая страница\n`/light_on light.kitchen` - включить свет на кухне\n`/switch_off switch.garden_lights` - выключить садовое освещение\n\n📄 *Навигация:* В списках устройств используйте ссылки ⬅️ ➡️ для перехода между страницами\n    '
+
+tests/test_bot.py:29: AssertionError
+_________________ TestTelegramBot.test_status_command_success __________________
+
+self = <Coroutine test_status_command_success>
+
+    def runtest(self) -> None:
+        self.obj = wrap_in_sync(
+            # https://github.com/pytest-dev/pytest-asyncio/issues/596
+            self.obj,  # type: ignore[has-type]
+        )
+>       super().runtest()
+
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:508: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:773: in inner
+    _loop.run_until_complete(task)
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/asyncio/base_events.py:654: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1392: in patched
+    with self.decoration_helper(patched,
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995e430990>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+_________________ TestTelegramBot.test_status_command_failure __________________
+
+self = <Coroutine test_status_command_failure>
+
+    def runtest(self) -> None:
+        self.obj = wrap_in_sync(
+            # https://github.com/pytest-dev/pytest-asyncio/issues/596
+            self.obj,  # type: ignore[has-type]
+        )
+>       super().runtest()
+
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:508: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:773: in inner
+    _loop.run_until_complete(task)
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/asyncio/base_events.py:654: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1392: in patched
+    with self.decoration_helper(patched,
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995e430c50>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+_____________________ TestTelegramBot.test_lights_command ______________________
+
+self = <Coroutine test_lights_command>
+
+    def runtest(self) -> None:
+        self.obj = wrap_in_sync(
+            # https://github.com/pytest-dev/pytest-asyncio/issues/596
+            self.obj,  # type: ignore[has-type]
+        )
+>       super().runtest()
+
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:508: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:773: in inner
+    _loop.run_until_complete(task)
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/asyncio/base_events.py:654: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1392: in patched
+    with self.decoration_helper(patched,
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995e430f50>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+________________ TestTelegramBot.test_light_on_command_success _________________
+
+self = <Coroutine test_light_on_command_success>
+
+    def runtest(self) -> None:
+        self.obj = wrap_in_sync(
+            # https://github.com/pytest-dev/pytest-asyncio/issues/596
+            self.obj,  # type: ignore[has-type]
+        )
+>       super().runtest()
+
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:508: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:773: in inner
+    _loop.run_until_complete(task)
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/asyncio/base_events.py:654: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1392: in patched
+    with self.decoration_helper(patched,
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995e431250>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+___________________ TestTelegramBot.test_light_on_already_on ___________________
+
+self = <Coroutine test_light_on_already_on>
+
+    def runtest(self) -> None:
+        self.obj = wrap_in_sync(
+            # https://github.com/pytest-dev/pytest-asyncio/issues/596
+            self.obj,  # type: ignore[has-type]
+        )
+>       super().runtest()
+
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:508: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:773: in inner
+    _loop.run_until_complete(task)
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/asyncio/base_events.py:654: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1392: in patched
+    with self.decoration_helper(patched,
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995e431550>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+________________ TestTelegramBot.test_light_off_command_success ________________
+
+self = <Coroutine test_light_off_command_success>
+
+    def runtest(self) -> None:
+        self.obj = wrap_in_sync(
+            # https://github.com/pytest-dev/pytest-asyncio/issues/596
+            self.obj,  # type: ignore[has-type]
+        )
+>       super().runtest()
+
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:508: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:773: in inner
+    _loop.run_until_complete(task)
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/asyncio/base_events.py:654: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1392: in patched
+    with self.decoration_helper(patched,
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995e431850>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+____________________ TestTelegramBot.test_switches_command _____________________
+
+self = <Coroutine test_switches_command>
+
+    def runtest(self) -> None:
+        self.obj = wrap_in_sync(
+            # https://github.com/pytest-dev/pytest-asyncio/issues/596
+            self.obj,  # type: ignore[has-type]
+        )
+>       super().runtest()
+
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:508: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:773: in inner
+    _loop.run_until_complete(task)
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/asyncio/base_events.py:654: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1392: in patched
+    with self.decoration_helper(patched,
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995e431b50>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+_____________________ TestTelegramBot.test_sensors_command _____________________
+
+self = <Coroutine test_sensors_command>
+
+    def runtest(self) -> None:
+        self.obj = wrap_in_sync(
+            # https://github.com/pytest-dev/pytest-asyncio/issues/596
+            self.obj,  # type: ignore[has-type]
+        )
+>       super().runtest()
+
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:508: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+.venv/lib/python3.11/site-packages/pytest_asyncio/plugin.py:773: in inner
+    _loop.run_until_complete(task)
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/asyncio/base_events.py:654: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1392: in patched
+    with self.decoration_helper(patched,
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1446: in __enter__
+    original, local = self.get_original()
+                      ^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <unittest.mock._patch object at 0x7f995e431e50>
+
+    def get_original(self):
+        target = self.getter()
+        name = self.attribute
+    
+        original = DEFAULT
+        local = False
+    
+        try:
+            original = target.__dict__[name]
+        except (AttributeError, KeyError):
+            original = getattr(target, name, DEFAULT)
+        else:
+            local = True
+    
+        if name in _builtins and isinstance(target, ModuleType):
+            self.create = True
+    
+        if not self.create and original is DEFAULT:
+>           raise AttributeError(
+                "%s does not have the attribute %r" % (target, name)
+            )
+E           AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1419: AttributeError
+____________________ TestTelegramBot.test_light_on_no_args _____________________
+
+self = <tests.test_bot.TestTelegramBot object at 0x7f995e43e750>
+mock_update = <Mock spec='Update' id='140296660643024'>
+mock_context = <Mock spec='_GenericAlias' id='140296660640080'>
+
+    @pytest.mark.asyncio
+    async def test_light_on_no_args(self, mock_update, mock_context):
+        """Test /light_on command without arguments"""
+        mock_context.args = []
+    
+        await light_on(mock_update, mock_context)
+    
+        mock_update.message.reply_text.assert_called_once()
+        call_args = mock_update.message.reply_text.call_args[0][0]
+>       assert "Укажите ID света" in call_args
+E       AssertionError: assert 'Укажите ID света' in '❌ Укажите ID светового устройства.\nПример: `/light_on light.kitchen`'
+
+tests/test_bot.py:187: AssertionError
+____________________ TestTelegramBot.test_light_off_no_args ____________________
+
+self = <tests.test_bot.TestTelegramBot object at 0x7f995e43eed0>
+mock_update = <Mock spec='Update' id='140296684109904'>
+mock_context = <Mock spec='_GenericAlias' id='140296658918096'>
+
+    @pytest.mark.asyncio
+    async def test_light_off_no_args(self, mock_update, mock_context):
+        """Test /light_off command without arguments"""
+        mock_context.args = []
+    
+        await light_off(mock_update, mock_context)
+    
+        mock_update.message.reply_text.assert_called_once()
+        call_args = mock_update.message.reply_text.call_args[0][0]
+>       assert "Укажите ID света" in call_args
+E       AssertionError: assert 'Укажите ID света' in '❌ Укажите ID светового устройства.\nПример: `/light_off light.kitchen`'
+
+tests/test_bot.py:199: AssertionError
+_______________ TestHomeAssistantAPI.test_get_all_states_success _______________
+
+self = <MagicMock name='_make_request' id='140296663546960'>
+args = ('GET', '/api/states'), kwargs = {}
+expected = call('GET', '/api/states'), actual = call('GET', 'states')
+_error_message = <function NonCallableMock.assert_called_with.<locals>._error_message at 0x7f995cedd3a0>
+cause = None
+
+    def assert_called_with(self, /, *args, **kwargs):
+        """assert that the last call was made with the specified arguments.
+    
+        Raises an AssertionError if the args and keyword args passed in are
+        different to the last call to the mock."""
+        if self.call_args is None:
+            expected = self._format_mock_call_signature(args, kwargs)
+            actual = 'not called.'
+            error_message = ('expected call not found.\nExpected: %s\n  Actual: %s'
+                    % (expected, actual))
+            raise AssertionError(error_message)
+    
+        def _error_message():
+            msg = self._format_mock_failure_message(args, kwargs)
+            return msg
+        expected = self._call_matcher(_Call((args, kwargs), two=True))
+        actual = self._call_matcher(self.call_args)
+        if actual != expected:
+            cause = expected if isinstance(expected, Exception) else None
+>           raise AssertionError(_error_message()) from cause
+E           AssertionError: expected call not found.
+E           Expected: _make_request('GET', '/api/states')
+E             Actual: _make_request('GET', 'states')
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:939: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+self = <MagicMock name='_make_request' id='140296663546960'>
+args = ('GET', '/api/states'), kwargs = {}
+
+    def assert_called_once_with(self, /, *args, **kwargs):
+        """assert that the mock was called exactly once and that that call was
+        with the specified arguments."""
+        if not self.call_count == 1:
+            msg = ("Expected '%s' to be called once. Called %s times.%s"
+                   % (self._mock_name or 'mock',
+                      self.call_count,
+                      self._calls_repr()))
+            raise AssertionError(msg)
+>       return self.assert_called_with(*args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: expected call not found.
+E       Expected: _make_request('GET', '/api/states')
+E         Actual: _make_request('GET', 'states')
+E       
+E       pytest introspection follows:
+E       
+E       Args:
+E       assert ('GET', 'states') == ('GET', '/api/states')
+E         
+E         At index 1 diff: 'states' != '/api/states'
+E         
+E         Full diff:
+E           (
+E               'GET',
+E         -     '/api/states',
+E         ?      -----
+E         +     'states',
+E           )
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:951: AssertionError
+
+During handling of the above exception, another exception occurred:
+
+self = <tests.test_home_assistant.TestHomeAssistantAPI object at 0x7f995e2bced0>
+mock_make_request = <MagicMock name='_make_request' id='140296663546960'>
+
+    @patch.object(HomeAssistantAPI, '_make_request')
+    def test_get_all_states_success(self, mock_make_request):
+        """Test successful API call to get all states"""
+        mock_make_request.return_value = [
+            {"entity_id": "light.test", "state": "on"},
+            {"entity_id": "switch.test", "state": "off"}
+        ]
+    
+        ha = HomeAssistantAPI()
+        result = ha.get_all_states()
+    
+        assert result is not None
+        assert len(result) == 2
+        assert result[0]["entity_id"] == "light.test"
+>       mock_make_request.assert_called_once_with("GET", "/api/states")
+E       AssertionError: expected call not found.
+E       Expected: _make_request('GET', '/api/states')
+E         Actual: _make_request('GET', 'states')
+E       
+E       pytest introspection follows:
+E       
+E       Args:
+E       assert ('GET', 'states') == ('GET', '/api/states')
+E         
+E         At index 1 diff: 'states' != '/api/states'
+E         
+E         Full diff:
+E           (
+E               'GET',
+E         -     '/api/states',
+E         ?      -----
+E         +     'states',
+E           )
+
+tests/test_home_assistant.py:34: AssertionError
+________________ TestHomeAssistantAPI.test_call_service_success ________________
+
+self = <tests.test_home_assistant.TestHomeAssistantAPI object at 0x7f995e2bd990>
+mock_make_request = <MagicMock name='_make_request' id='140296665790608'>
+
+    @patch.object(HomeAssistantAPI, '_make_request')
+    def test_call_service_success(self, mock_make_request):
+        """Test successful service call"""
+        mock_make_request.return_value = {"success": True}
+    
+        ha = HomeAssistantAPI()
+        result = ha.call_service("light", "turn_on", "light.test")
+    
+>       assert result is True
+E       assert False is True
+
+tests/test_home_assistant.py:54: AssertionError
+------------------------------ Captured log call -------------------------------
+ERROR    home_assistant:home_assistant.py:113 Service call error: HTTPConnectionPool(host='test-ha.local', port=8123): Max retries exceeded with url: /api/services/light/turn_on (Caused by NameResolutionError("<urllib3.connection.HTTPConnection object at 0x7f995cd78790>: Failed to resolve 'test-ha.local' ([Errno -3] Temporary failure in name resolution)"))
+______________ TestHomeAssistantAPI.test_test_connection_success _______________
+
+self = <tests.test_home_assistant.TestHomeAssistantAPI object at 0x7f995e2b0cd0>
+mock_make_request = <MagicMock name='_make_request' id='140296661656208'>
+
+    @patch.object(HomeAssistantAPI, '_make_request')
+    def test_test_connection_success(self, mock_make_request):
+        """Test successful connection test"""
+        mock_make_request.return_value = {"success": True}
+    
+        ha = HomeAssistantAPI()
+        result = ha.test_connection()
+    
+>       assert result is True
+E       assert False is True
+
+tests/test_home_assistant.py:143: AssertionError
+________________ TestMetricsCollector.test_update_memory_usage _________________
+
+args = (<tests.test_metrics.TestMetricsCollector object at 0x7f995e2d1090>,)
+keywargs = {}
+
+    @wraps(func)
+    def patched(*args, **keywargs):
+>       with self.decoration_helper(patched,
+                                    args,
+                                    keywargs) as (newargs, newkeywargs):
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1375: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:137: in __enter__
+    return next(self.gen)
+           ^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1357: in decoration_helper
+    arg = exit_stack.enter_context(patching)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/contextlib.py:517: in enter_context
+    result = _enter(cm)
+             ^^^^^^^^^^
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/unittest/mock.py:1430: in __enter__
+    self.target = self.getter()
+                  ^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+name = 'metrics.psutil'
+
+    def resolve_name(name):
+        """
+        Resolve a name to an object.
+    
+        It is expected that `name` will be a string in one of the following
+        formats, where W is shorthand for a valid Python identifier and dot stands
+        for a literal period in these pseudo-regexes:
+    
+        W(.W)*
+        W(.W)*:(W(.W)*)?
+    
+        The first form is intended for backward compatibility only. It assumes that
+        some part of the dotted name is a package, and the rest is an object
+        somewhere within that package, possibly nested inside other objects.
+        Because the place where the package stops and the object hierarchy starts
+        can't be inferred by inspection, repeated attempts to import must be done
+        with this form.
+    
+        In the second form, the caller makes the division point clear through the
+        provision of a single colon: the dotted name to the left of the colon is a
+        package to be imported, and the dotted name to the right is the object
+        hierarchy within that package. Only one import is needed in this form. If
+        it ends with the colon, then a module object is returned.
+    
+        The function will return an object (which might be a module), or raise one
+        of the following exceptions:
+    
+        ValueError - if `name` isn't in a recognised format
+        ImportError - if an import failed when it shouldn't have
+        AttributeError - if a failure occurred when traversing the object hierarchy
+                         within the imported package to get to the desired object.
+        """
+        global _NAME_PATTERN
+        if _NAME_PATTERN is None:
+            # Lazy import to speedup Python startup time
+            import re
+            dotted_words = r'(?!\d)(\w+)(\.(?!\d)(\w+))*'
+            _NAME_PATTERN = re.compile(f'^(?P<pkg>{dotted_words})'
+                                       f'(?P<cln>:(?P<obj>{dotted_words})?)?$',
+                                       re.UNICODE)
+    
+        m = _NAME_PATTERN.match(name)
+        if not m:
+            raise ValueError(f'invalid format: {name!r}')
+        gd = m.groupdict()
+        if gd.get('cln'):
+            # there is a colon - a one-step import is all that's needed
+            mod = importlib.import_module(gd['pkg'])
+            parts = gd.get('obj')
+            parts = parts.split('.') if parts else []
+        else:
+            # no colon - have to iterate to find the package boundary
+            parts = name.split('.')
+            modname = parts.pop(0)
+            # first part *must* be a module/package.
+            mod = importlib.import_module(modname)
+            while parts:
+                p = parts[0]
+                s = f'{modname}.{p}'
+                try:
+                    mod = importlib.import_module(s)
+                    parts.pop(0)
+                    modname = s
+                except ImportError:
+                    break
+        # if we reach this point, mod is the module, already imported, and
+        # parts is the list of parts in the object hierarchy to be traversed, or
+        # an empty list if just the module is wanted.
+        result = mod
+        for p in parts:
+>           result = getattr(result, p)
+                     ^^^^^^^^^^^^^^^^^^
+E           AttributeError: module 'metrics' has no attribute 'psutil'
+
+/opt/hostedtoolcache/Python/3.11.13/x64/lib/python3.11/pkgutil.py:715: AttributeError
+________________ TestMetricsCollector.test_get_metrics_summary _________________
+
+self = <tests.test_metrics.TestMetricsCollector object at 0x7f995e2d32d0>
+
+    def test_get_metrics_summary(self):
+        """Test getting metrics summary"""
+        collector = MetricsCollector()
+    
+        # Add some test data
+        collector.active_users_cache.add("user1")
+        collector.active_users_cache.add("user2")
+    
+        summary = collector.get_metrics_summary()
+    
+>       assert "app_uptime_seconds" in summary
+E       AssertionError: assert 'app_uptime_seconds' in {'active_users': 2, 'homeassistant_connection': 0.0, 'total_commands': 0.0, 'uptime_seconds': 1.5497207641601562e-05}
+
+tests/test_metrics.py:125: AssertionError
+_______ TestMetricsDecorators.test_track_telegram_command_with_exception _______
+
+self = <tests.test_metrics.TestMetricsDecorators object at 0x7f995e464a10>
+
+    @pytest.mark.asyncio
+    async def test_track_telegram_command_with_exception(self):
+        """Test track_telegram_command decorator when function raises exception"""
+    
+        @track_telegram_command("failing_command")
+        async def failing_function(update, context):
+            raise ValueError("Test error")
+    
+        mock_update = Mock()
+        mock_update.effective_user.id = 123456
+        mock_context = Mock()
+    
+        with patch('metrics.metrics_collector') as mock_collector:
+            with pytest.raises(ValueError):
+                await failing_function(mock_update, mock_context)
+    
+            # Should still record the metric with success=False
+            mock_collector.record_telegram_command.assert_called_once()
+            call_args = mock_collector.record_telegram_command.call_args
+>           assert call_args[0][2] is False  # success parameter
+                   ^^^^^^^^^^^^^^^
+E           IndexError: tuple index out of range
+
+tests/test_metrics.py:190: IndexError
+------------------------------ Captured log call -------------------------------
+ERROR    metrics:metrics.py:267 Error in command failing_command: Test error
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.11.13-final-0 _______________
+
+Name                           Stmts   Miss  Cover   Missing
+------------------------------------------------------------
+app.py                           102     46    55%   22-23, 41-43, 53-55, 76, 79-82, 90-92, 102-110, 128-130, 141-143, 155-173, 179-182, 185
+bot.py                           264    221    16%   83-107, 112-170, 179-206, 215-242, 247-300, 305-318, 323-336, 341-395, 400, 407-432, 435
+bot_runner.py                     20     20     0%   7-37
+home_assistant.py                145     61    58%   19, 45-68, 73-75, 83, 102-110, 121-122, 137-139, 143-174, 180, 198, 228, 233, 237-242, 253-255
+main.py                           29     29     0%   1-59
+metrics.py                       141     18    87%   141-144, 148-149, 210-213, 292-295, 319-321, 339-340
+telegram_bot_service.py           33     33     0%   7-55
+tests/__init__.py                  0      0   100%
+tests/conftest.py                 77     28    64%   12-22, 28-70, 119-136
+tests/test_app.py                 75     35    53%   22-34, 39-47, 52-72, 77-83, 113-114, 133-138
+tests/test_basic.py               55      0   100%
+tests/test_bot.py                110     55    50%   30-31, 37-48, 54-60, 66-85, 91-103, 109-120, 126-138, 144-157, 163-176, 188, 200
+tests/test_home_assistant.py      86      2    98%   55-56
+tests/test_metrics.py            104     13    88%   33-40, 126-133
+------------------------------------------------------------
+TOTAL                           1241    561    55%
+Coverage HTML written to dir htmlcov
+Coverage XML written to file coverage.xml
+=========================== short test summary info ============================
+FAILED tests/test_app.py::TestFlaskApp::test_index_route - assert b'System Status' in b'<!DOCTYPE html>\n<html lang="en" data-bs-theme="dark">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Dashboard - Home Assistant Telegram Bot</title>\n    \n    <!-- Bootstrap CSS -->\n    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">\n    \n    <!-- Font Awesome Icons -->\n    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\n    \n    <!-- Custom CSS -->\n    <link rel="stylesheet" href="/static/style.css">\n</head>\n<body>\n    <!-- Navigation -->\n    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">\n        <div class="container">\n            <a class="navbar-brand" href="/">\n                <i class="fas fa-home me-2"></i>\n                Home Assistant Bot\n            </a>\n            \n            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">\n                <span class="navbar-toggler-icon"></span>\n            </button>\n            \n            <div class="collapse navbar-collapse" id="navbarNav">\n                <ul c...\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-pause-circle me-1"></i>Stopped\';\n                        break;\n                    case \'disabled\':\n                        telegramStatus.className = \'badge bg-secondary\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-ban me-1"></i>Disabled\';\n                        break;\n                    default:\n                        telegramStatus.className = \'badge bg-info\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-question-circle me-1"></i>Unknown\';\n                }\n            }\n        })\n        .catch(error => {\n            console.error(\'Status check failed:\', error);\n            const telegramStatus = document.getElementById(\'telegram-status\');\n            if (telegramStatus) {\n                telegramStatus.className = \'badge bg-danger\';\n                telegramStatus.innerHTML = \'<i class="fas fa-exclamation-triangle me-1"></i>Error\';\n            }\n        });\n}\n\n// Check status immediately and then every 10 seconds\nupdateServiceStatus();\nsetInterval(updateServiceStatus, 10000);\n</script>\n\n</body>\n</html>'
+ +  where b'<!DOCTYPE html>\n<html lang="en" data-bs-theme="dark">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Dashboard - Home Assistant Telegram Bot</title>\n    \n    <!-- Bootstrap CSS -->\n    <link href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css" rel="stylesheet">\n    \n    <!-- Font Awesome Icons -->\n    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\n    \n    <!-- Custom CSS -->\n    <link rel="stylesheet" href="/static/style.css">\n</head>\n<body>\n    <!-- Navigation -->\n    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">\n        <div class="container">\n            <a class="navbar-brand" href="/">\n                <i class="fas fa-home me-2"></i>\n                Home Assistant Bot\n            </a>\n            \n            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">\n                <span class="navbar-toggler-icon"></span>\n            </button>\n            \n            <div class="collapse navbar-collapse" id="navbarNav">\n                <ul c...\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-pause-circle me-1"></i>Stopped\';\n                        break;\n                    case \'disabled\':\n                        telegramStatus.className = \'badge bg-secondary\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-ban me-1"></i>Disabled\';\n                        break;\n                    default:\n                        telegramStatus.className = \'badge bg-info\';\n                        telegramStatus.innerHTML = \'<i class="fas fa-question-circle me-1"></i>Unknown\';\n                }\n            }\n        })\n        .catch(error => {\n            console.error(\'Status check failed:\', error);\n            const telegramStatus = document.getElementById(\'telegram-status\');\n            if (telegramStatus) {\n                telegramStatus.className = \'badge bg-danger\';\n                telegramStatus.innerHTML = \'<i class="fas fa-exclamation-triangle me-1"></i>Error\';\n            }\n        });\n}\n\n// Check status immediately and then every 10 seconds\nupdateServiceStatus();\nsetInterval(updateServiceStatus, 10000);\n</script>\n\n</body>\n</html>' = <WrapperTestResponse 13822 bytes [200 OK]>.data
+FAILED tests/test_app.py::TestFlaskApp::test_api_status_success - AttributeError: <module 'app' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/app.py'> does not have the attribute 'ha_client'
+FAILED tests/test_app.py::TestFlaskApp::test_api_status_failure - AttributeError: <module 'app' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/app.py'> does not have the attribute 'ha_client'
+FAILED tests/test_app.py::TestFlaskApp::test_api_lights - AttributeError: <module 'app' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/app.py'> does not have the attribute 'ha_client'
+FAILED tests/test_app.py::TestFlaskApp::test_api_lights_error - AttributeError: <module 'app' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/app.py'> does not have the attribute 'ha_client'
+FAILED tests/test_app.py::TestFlaskApp::test_api_metrics_summary - KeyError: 'app_uptime_seconds'
+FAILED tests/test_app.py::TestFlaskApp::test_telegram_bot_running_check - TypeError: string indices must be integers, not 'str'
+FAILED tests/test_basic.py::TestBasicFunctionality::test_flask_app_creation - assert True is False
+FAILED tests/test_bot.py::TestTelegramBot::test_help_command - AssertionError: assert 'Доступные команды' in '\n🤖 *Справка по командам Home Assistant Bot*\n\n📊 *Информация о системе:*\n/status - Показать статус системы Home Assistant\n/sensors \\[номер\\_страницы\\] - Показания датчиков\n/lights \\[номер\\_страницы\\] - Список светильников\n/switches \\[номер\\_страницы\\] - Список выключателей\n\n💡 *Управление освещением:*\n/light\\_on <entity\\_id> - Включить светильник\n/light\\_off <entity\\_id> - Выключить светильник\n\n🔌 *Управление выключателями:*\n/switch\\_on <entity\\_id> - Включить выключатель\n/switch\\_off <entity\\_id> - Выключить выключатель\n\n*Примеры использования:*\n`/lights` - первая страница световых устройств\n`/lights 2` - вторая страница\n`/light_on light.kitchen` - включить свет на кухне\n`/switch_off switch.garden_lights` - выключить садовое освещение\n\n📄 *Навигация:* В списках устройств используйте ссылки ⬅️ ➡️ для перехода между страницами\n    '
+FAILED tests/test_bot.py::TestTelegramBot::test_status_command_success - AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+FAILED tests/test_bot.py::TestTelegramBot::test_status_command_failure - AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+FAILED tests/test_bot.py::TestTelegramBot::test_lights_command - AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+FAILED tests/test_bot.py::TestTelegramBot::test_light_on_command_success - AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+FAILED tests/test_bot.py::TestTelegramBot::test_light_on_already_on - AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+FAILED tests/test_bot.py::TestTelegramBot::test_light_off_command_success - AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+FAILED tests/test_bot.py::TestTelegramBot::test_switches_command - AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+FAILED tests/test_bot.py::TestTelegramBot::test_sensors_command - AttributeError: <module 'bot' from '/home/runner/work/HomeAssistantTelegram/HomeAssistantTelegram/bot.py'> does not have the attribute 'ha_client'
+FAILED tests/test_bot.py::TestTelegramBot::test_light_on_no_args - AssertionError: assert 'Укажите ID света' in '❌ Укажите ID светового устройства.\nПример: `/light_on light.kitchen`'
+FAILED tests/test_bot.py::TestTelegramBot::test_light_off_no_args - AssertionError: assert 'Укажите ID света' in '❌ Укажите ID светового устройства.\nПример: `/light_off light.kitchen`'
+FAILED tests/test_home_assistant.py::TestHomeAssistantAPI::test_get_all_states_success - AssertionError: expected call not found.
+Expected: _make_request('GET', '/api/states')
+  Actual: _make_request('GET', 'states')
+
+pytest introspection follows:
+
+Args:
+assert ('GET', 'states') == ('GET', '/api/states')
+  
+  At index 1 diff: 'states' != '/api/states'
+  
+  Full diff:
+    (
+        'GET',
+  -     '/api/states',
+  ?      -----
+  +     'states',
+    )
+FAILED tests/test_home_assistant.py::TestHomeAssistantAPI::test_call_service_success - assert False is True
+FAILED tests/test_home_assistant.py::TestHomeAssistantAPI::test_test_connection_success - assert False is True
+FAILED tests/test_metrics.py::TestMetricsCollector::test_update_memory_usage - AttributeError: module 'metrics' has no attribute 'psutil'
+FAILED tests/test_metrics.py::TestMetricsCollector::test_get_metrics_summary - AssertionError: assert 'app_uptime_seconds' in {'active_users': 2, 'homeassistant_connection': 0.0, 'total_commands': 0.0, 'uptime_seconds': 1.5497207641601562e-05}
+FAILED tests/test_metrics.py::TestMetricsDecorators::test_track_telegram_command_with_exception - IndexError: tuple index out of range
+======================== 25 failed, 29 passed in 4.60s =========================
+Error: Process completed with exit code 1.

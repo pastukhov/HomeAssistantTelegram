@@ -14,13 +14,13 @@ class TestFlaskApp:
         response = flask_app.get('/')
         assert response.status_code == 200
         assert b'Home Assistant Telegram Bot' in response.data
-        assert b'System Status' in response.data
+        assert b'Dashboard' in response.data
     
-    @patch('app.ha_client')
-    def test_api_status_success(self, mock_ha_client, flask_app):
+    @patch('app.ha_api')
+    def test_api_status_success(self, mock_ha_api, flask_app):
         """Test /api/status endpoint with successful connection"""
-        mock_ha_client.test_connection.return_value = True
-        mock_ha_client.get_all_states.return_value = [
+        mock_ha_api.test_connection.return_value = True
+        mock_ha_api.get_all_states.return_value = [
             {"entity_id": "light.test", "state": "on"},
             {"entity_id": "switch.test", "state": "off"}
         ]
@@ -33,11 +33,11 @@ class TestFlaskApp:
         assert data['telegram_bot']['running'] is True
         assert data['total_entities'] == 2
     
-    @patch('app.ha_client')
-    def test_api_status_failure(self, mock_ha_client, flask_app):
+    @patch('app.ha_api')
+    def test_api_status_failure(self, mock_ha_api, flask_app):
         """Test /api/status endpoint with connection failure"""
-        mock_ha_client.test_connection.return_value = False
-        mock_ha_client.get_all_states.return_value = None
+        mock_ha_api.test_connection.return_value = False
+        mock_ha_api.get_all_states.return_value = None
         
         response = flask_app.get('/api/status')
         assert response.status_code == 200
@@ -46,10 +46,10 @@ class TestFlaskApp:
         assert data['home_assistant']['connected'] is False
         assert data['total_entities'] == 0
     
-    @patch('app.ha_client')
-    def test_api_lights(self, mock_ha_client, flask_app):
+    @patch('app.ha_api')
+    def test_api_lights(self, mock_ha_api, flask_app):
         """Test /api/lights endpoint"""
-        mock_ha_client.get_lights.return_value = [
+        mock_ha_api.get_lights.return_value = [
             {
                 "entity_id": "light.bedroom",
                 "state": "on", 
@@ -71,10 +71,10 @@ class TestFlaskApp:
         assert data[0]['state'] == 'on'
         assert data[1]['state'] == 'off'
     
-    @patch('app.ha_client')
-    def test_api_lights_error(self, mock_ha_client, flask_app):
+    @patch('app.ha_api')
+    def test_api_lights_error(self, mock_ha_api, flask_app):
         """Test /api/lights endpoint with error"""
-        mock_ha_client.get_lights.side_effect = Exception("API Error")
+        mock_ha_api.get_lights.side_effect = Exception("API Error")
         
         response = flask_app.get('/api/lights')
         assert response.status_code == 500
