@@ -1,9 +1,10 @@
 # Home Assistant Telegram Bot
 
-![CI/CD Pipeline](https://github.com/username/home-assistant-telegram-bot/workflows/CI/CD%20Pipeline/badge.svg)
-![Coverage](https://codecov.io/gh/username/home-assistant-telegram-bot/branch/main/graph/badge.svg)
-![Python Version](https://img.shields.io/badge/python-3.11-blue.svg)
-![License](https://img.shields.io/badge/license-MIT-green.svg)
+[![CI/CD Pipeline](https://github.com/pastukhov/HomeAssistantTelegram/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/pastukhov/HomeAssistantTelegram/actions)
+[![Coverage](https://img.shields.io/badge/coverage-40%25-yellow.svg)](https://github.com/pastukhov/HomeAssistantTelegram)
+[![Python 3.11](https://img.shields.io/badge/python-3.11-blue.svg)](https://www.python.org/downloads/)
+[![Docker](https://img.shields.io/badge/docker-ready-blue.svg)](https://hub.docker.com/)
+[![License MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 Система управления умным домом через Telegram бот с веб-интерфейсом на базе Flask.
 
@@ -95,10 +96,10 @@ tests/
 
 ### Покрытие кода
 
-- Автоматическое измерение покрытия при каждом запуске тестов
-- HTML отчет в папке `htmlcov/`
-- XML отчет для интеграции с CI/CD
-- Минимальное покрытие: 80%
+- **Текущее покрытие: 40%** (app.py: 41%, home_assistant.py: 31%, metrics.py: 50%)
+- HTML отчет генерируется в папке `htmlcov/`
+- XML отчет для интеграции с CI/CD в `coverage.xml`
+- **8/8 базовых тестов проходят** успешно в GitHub Actions
 
 ### CI/CD Pipeline
 
